@@ -4,13 +4,17 @@ A dashboard that shows why building one feature doesn't move EPM databases to CL
 
 ## What it shows
 
-1. **Executive summary:** headline statements, how we counted, why we count databases rather than customers, and decisions needed.
+1. **Executive summary:** headline statements, what this means, and decisions needed.
 2. **At a glance:** key counts and how the number of databases able to migrate grows as each feature is built.
-3. **Headline metrics:** databases blocked by at least one feature, by two or more, and the most common need.
-4. **Filters:** country and client type.
+3. **Filters:** country and client type (apply to sections 4 to 7).
+4. **Headline metrics for the current filters:** the three summary measures, recalculated for the filters.
 5. **Features needed:** one card per feature; select features to list the databases that need them.
 6. **Databases by selected feature:** the filtered list, with CSV export.
-7. **Databases sorted by features needed:** every database, grouped by ECR ID, sortable, with CSV export.
+7. **Databases sorted by features needed:** every database, rolled up by account (ECR ID). All VISN (VA network) databases form one group regardless of ECR or CMX ID. Opens sorted by Multi-database (Org Picker) count; click any column to re-sort; click a group to see its databases. CSV export lists every database.
+8. **How we counted:** the scope and counting rules.
+9. **Why we count databases, not customers:** why EPM databases can't simply be translated into customers.
+
+Technical notes (source, scope and method) are collapsed at the bottom of the page.
 
 ## Repository layout
 

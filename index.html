@@ -104,7 +104,7 @@ input[type=search]{font:inherit;padding:5px 8px;border:1px solid var(--ivory);bo
 h2 .num{color:var(--ink);font-family:"National 2",sans-serif;font-size:14px;margin-right:8px;vertical-align:3px}
 .dist{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px}
 .dist button{font:inherit;font-size:12px;border:1px solid var(--ivory);background:var(--paper);border-radius:var(--r);padding:6px 10px;cursor:pointer;color:var(--g)}
-.dist button b{font-size:15px;margin-right:4px}
+.dist button b{font-size:15px;margin-left:6px}
 .dist button.on{border-color:var(--o);background:#fff}
 th.sortable{cursor:pointer;white-space:nowrap}
 th.sortable:hover{background:var(--paper)}
@@ -143,6 +143,12 @@ tr.child td{background:#FCFAF6}
 .cust ul{margin:0 0 10px;padding-left:18px}
 .cust li{margin:0 0 6px}
 .cust .ex{display:block;font-size:12px;color:var(--ink);font-style:italic}
+.ref{font-size:14px;line-height:1.55;max-width:1040px}
+.ref ol{margin:8px 0 0;padding-left:20px}
+.ref li{margin:0 0 8px}
+.ref .cust{border-top:0;padding-top:0;margin-top:8px}
+.foot summary{cursor:pointer;font-weight:700;color:var(--ink);list-style:revert}
+.foot[open] summary{margin-bottom:8px}
 .foot{margin-top:26px;font-size:12px;color:var(--ink);border-top:1px solid var(--ivory);padding-top:12px}
 .foot p{margin:0 0 6px}
 @media(max-width:860px){.heads{grid-template-columns:1fr}}
@@ -171,32 +177,8 @@ tr.child td{background:#FCFAF6}
     <div class="bd">
       <ul class="lead" id="exLead"></ul>
       <p class="so" id="exSo"></p>
-      <div class="how">
-          <h3>How we counted</h3>
-          <ol>
-            <li><b>Latest data.</b> Built from the refreshed directory (<span id="exSrc"></span>, <span id="exGen"></span>).</li>
-            <li><b>Counted by database.</b> Each database is counted once. An account with several databases counts once per database.</li>
-            <li><b>No customer count yet.</b> We report databases until "customer" has an agreed definition.</li>
-            <li><b>Only databases still to be migrated are counted.</b> Excluded: completed migrations, Net New, TTP Cutover, cancellations, Connect, Internal and DirectCourse.</li>
-            <li><b>Six missing features.</b> Multi-database (Org Picker), HR Download, Self-registration link, SCORM Uploader, Linked Tests and CK Nursing. Multi-database now uses the updated Org Picker definition, which is why the blocked count fell after the data refresh.</li>
-          </ol>
-      </div>
-      <div class="cust">
-        <h3>Why we count databases, not customers</h3>
-        <p>For EPM, “customer” is a hard thing to define for a few different reasons:</p>
-        <ul>
-          <li>A “customer” (one ECR) could have multiple databases if they license our content with different delivery methods. <span class="ex">Example: Baptist Health Corbin and a TON of others – this is very common.</span></li>
-          <li>A “customer” (one or multiple ECRs) could have multiple databases if the health system level licenses some of our content, while one of the hospitals license another curriculum separately. <span class="ex">Example: Mount Sinai</span></li>
-          <li>A “customer” (one ECR) could have multiple databases if they chose to manage the content they license on a per hospital basis, instead of at the health system level. <span class="ex">Example: VA</span></li>
-          <li>A “customer” could consist of multiple databases that are part of a health system. This health system may or may not have multiple ECR IDs. <span class="ex">Example: Common Spirit</span></li>
-          <li>A “customer” could consist of multiple databases loosely tied together as part of a consortium or affiliated network. This is most likely multiple ECR IDs. <span class="ex">Example: NEAH, Medstar</span></li>
-          <li>A “customer” could potentially have more than one of the above going on! <span class="ex">Example: Kaiser Permanente</span></li>
-        </ul>
-        <p>Truly, I don’t know if there is a way to translate databases into “customers” given all of these nuances (and why we’ve stuck with databases for so long). Also, the number of “customers” on EPM is not going to ever be the same as the number of “customers” on CLH, as we will need to combine EPM databases when we move them to CLH. <span class="ex">Example: Fortis Hospitals</span></p>
-        <p>Many EPM databases do not have unique ECR IDs right now. Since the VA is contracted at the national level, there is a singular ECR, but ~170 databases associated with the contract, meaning that we assigned them ECR-ID_a/b/c/etc as a placeholder for the ECR ID since we couldn’t reuse the original. We haven’t yet worked out how to translate all of those into unique ECR IDs or even if this is something we will need to do if we can combine all of these on CLH.</p>
-      </div>
       <div class="oq"><h3>Decisions needed</h3><ol id="exOQ"></ol></div>
-      <p class="nt">This summary and section 2 always show the full picture. Sections 3 to 7 change with the filters.</p>
+      <p class="nt">This summary and section 2 always show the full picture. Sections 4 to 7 change with the filters in section 3. Sections 8 and 9 explain how the numbers were counted.</p>
     </div>
   </details>
 
@@ -212,14 +194,8 @@ tr.child td{background:#FCFAF6}
   </section>
 
   <section class="sec">
-  <h2><span class="num">3</span>Headline metrics</h2>
-  <p class="hint">Changes with the filters.</p>
-  <div class="heads" id="heads"></div>
-  </section>
-
-  <section class="sec">
-  <h2><span class="num">4</span>Filters</h2>
-  <p class="hint">Narrow every section below by country or client type.</p>
+  <h2><span class="num">3</span>Filters</h2>
+  <p class="hint">Narrow sections 4 to 7 by country or client type. The filter bar stays at the top as you scroll.</p>
   </section>
   <div class="controls">
     <span>Country <select id="regSel"></select></span>
@@ -227,6 +203,13 @@ tr.child td{background:#FCFAF6}
     <span>Show databases that need <span class="seg" id="modeSeg"><button data-m="any" class="on">Any selected feature</button><button data-m="all">All selected features</button></span></span>
     <button class="btn" id="clearBtn">Clear selection</button>
   </div>
+
+  <section class="sec">
+  <h2><span class="num">4</span>Headline metrics for the current filters</h2>
+  <p class="hint">The same three measures as the executive summary, recalculated for the filters above.</p>
+  <div class="heads" id="heads"></div>
+  </section>
+
 
 
   <section class="sec">
@@ -253,13 +236,41 @@ tr.child td{background:#FCFAF6}
   <div id="allWrap"></div>
   </section>
 
-  <div class="foot">
-    <p><b>Technical notes</b></p>
+  <section class="sec ref">
+  <h2><span class="num">8</span>How we counted</h2>
+  <ol>
+            <li><b>Latest data.</b> Built from the refreshed directory (<span id="exSrc"></span>, <span id="exGen"></span>).</li>
+            <li><b>Counted by database.</b> Each database is counted once. An account with several databases counts once per database.</li>
+            <li><b>No customer count yet.</b> We report databases until "customer" has an agreed definition.</li>
+            <li><b>Only databases still to be migrated are counted.</b> Excluded: completed migrations, Net New, TTP Cutover, cancellations, Connect, Internal and DirectCourse.</li>
+            <li><b>Six missing features.</b> Multi-database (Org Picker), HR Download, Self-registration link, SCORM Uploader, Linked Tests and CK Nursing. Multi-database uses the updated Org Picker definition.</li>
+          </ol>
+  </section>
+
+  <section class="sec ref">
+  <h2><span class="num">9</span>Why we count databases, not customers</h2>
+  <div class="cust">
+  <p>For EPM, “customer” is a hard thing to define for a few different reasons:</p>
+        <ul>
+          <li>A “customer” (one ECR) could have multiple databases if they license our content with different delivery methods. <span class="ex">Example: Baptist Health Corbin and a TON of others – this is very common.</span></li>
+          <li>A “customer” (one or multiple ECRs) could have multiple databases if the health system level licenses some of our content, while one of the hospitals license another curriculum separately. <span class="ex">Example: Mount Sinai</span></li>
+          <li>A “customer” (one ECR) could have multiple databases if they chose to manage the content they license on a per hospital basis, instead of at the health system level. <span class="ex">Example: VA</span></li>
+          <li>A “customer” could consist of multiple databases that are part of a health system. This health system may or may not have multiple ECR IDs. <span class="ex">Example: Common Spirit</span></li>
+          <li>A “customer” could consist of multiple databases loosely tied together as part of a consortium or affiliated network. This is most likely multiple ECR IDs. <span class="ex">Example: NEAH, Medstar</span></li>
+          <li>A “customer” could potentially have more than one of the above going on! <span class="ex">Example: Kaiser Permanente</span></li>
+        </ul>
+        <p>Truly, I don’t know if there is a way to translate databases into “customers” given all of these nuances (and why we’ve stuck with databases for so long). Also, the number of “customers” on EPM is not going to ever be the same as the number of “customers” on CLH, as we will need to combine EPM databases when we move them to CLH. <span class="ex">Example: Fortis Hospitals</span></p>
+        <p>Many EPM databases do not have unique ECR IDs right now. Since the VA is contracted at the national level, there is a singular ECR, but ~170 databases associated with the contract, meaning that we assigned them ECR-ID_a/b/c/etc as a placeholder for the ECR ID since we couldn’t reuse the original. We haven’t yet worked out how to translate all of those into unique ECR IDs or even if this is something we will need to do if we can combine all of these on CLH.</p>
+  </div>
+  </section>
+
+  <details class="foot">
+    <summary>Technical notes</summary>
     <p><b>Source:</b> <span id="fSrc"></span>, main directory tab (<span id="fRows"></span> rows). Data generated <span id="fGen"></span>.</p>
     <p><b>Unit:</b> one record per CMX ID (one row per database). A record with more than one database appears once per database. Rows without a CMX ID (<span id="fNoCmx"></span>) are left out.</p>
     <p><b>Scope:</b> <span id="fN"></span> EPM databases still to migrate. Uses the filters set on the directory's main tab (<span id="fXF"></span> rows filtered out): Phase excludes Cancel/Remove and other non-migration phases (NA, Internal, DirectCourse, Data Moved to CLH); Migration Status excludes Complete (<span id="fC"></span>), Net New (<span id="fNN"></span>), TTP Cutover (<span id="fT"></span>) and NA. Also excludes databases marked Canceled under CLH account status or Change Type (<span id="fCX"></span>); and client types Workforce Development, Internal MCS Site and all Connect types (<span id="fCT"></span>).</p>
     <p><b>Features:</b> Multi-database (Org Picker), HR Download, Self-registration link, SCORM Uploader, LinkedContent / Linked Tests and CK Nursing. A feature counts as needed when its column is "Yes". Multi-database uses the new "Multi-database (Org Picker)" column, not "Multiple Databases (Old Def)". Linked Tests and LinkedContent (Tests) are combined, as are the two CK Nursing columns.</p>
-  </div>
+  </details>
 </div>
 
 <script>
@@ -282,7 +293,7 @@ function heads(r){
   $('heads').innerHTML=`
    <div class="hd"><div class="v">${n(one)}</div><div class="t">databases depend on at least one of the six features CLH does not have yet.</div></div>
    <div class="hd"><div class="v">${n(two)}</div><div class="t">databases depend on two or more of these features.</div></div>
-   <div class="hd"><div class="v sm">${esc(FEATURES[top])}</div><div class="t">Most common need: ${n(cnt[top])} databases.</div></div>`;
+   <div class="hd"><div class="t" style="margin:0 0 4px">Most common need:</div><div class="v sm">${esc(FEATURES[top])}</div><div class="t">Needed by ${n(cnt[top])} databases.</div></div>`;
 }
 function gates(r){
   const order=[...Array(NF).keys()].sort((a,b)=>r.filter(c=>c.needs[b]).length-r.filter(c=>c.needs[a]).length);
@@ -333,7 +344,7 @@ function execSummary(){
   $('exLead').innerHTML=`
     <li><b>${n(g.length)}</b> databases depend on at least one of the six features CLH does not have yet.</li>
     <li><b>${n(two)}</b> databases depend on two or more of these features.</li>
-    <li>Most common need: <b>${esc(FEATURES[top])}</b> (${n(cnt[top])} databases).</li>`;
+    <li>Most common need: <b>${esc(FEATURES[top])}</b>, needed by ${n(cnt[top])} databases.</li>`;
   // ---- At a glance: cumulative build-up ----
   const G=g.length||1;
   const steps=seq.map((s,k)=>({...s,add:s.u-(k?seq[k-1].u:0)}));
@@ -358,21 +369,21 @@ function execSummary(){
   const opTop=Object.entries(opG).sort((a,b)=>b[1]-a[1])[0];
   const opAcct=opTop?(g.find(c=>c.ecr===opTop[0])||{}).name:'';
   $('exOQ').innerHTML=`
-    <li><b>Define "customer".</b> Until agreed, we report databases only (see "Why we count databases, not customers" above).</li>
+    <li><b>Define "customer".</b> Until agreed, we report databases only (see section 9, "Why we count databases, not customers").</li>
     <li><b>Is the database list a workable size?</b> Lists for a single feature range from ${n(Math.min(...cnt))} to ${n(biggest)} databases.</li>`;
-  $('exSrc').textContent=D.source||'Client Directory.xlsx';$('exGen').textContent=D.generated||'';
+  $('exSrc').textContent=(D.source||'Client Directory.xlsx').replace(/-[0-9a-f]{6,}(?=\.xlsx$)/i,'').replace(/\.xlsx$/i,'');$('exGen').textContent=D.generated||'';
   
 }
 
 
 /* ---------- ALL DATABASES SORTED BY FEATURES NEEDED (grouped by ECR ID) ---------- */
-const A={sort:'k',dir:-1,hide:true,q:'',k:null,group:true,col:new Set()};
+const A={sort:(KEYS.indexOf('orgpicker')>=0?'f'+KEYS.indexOf('orgpicker'):'k'),dir:-1,hide:true,q:'',k:null,group:true,exp:new Set()};
 let allList=[];
 function all(r){
   const order=[...Array(NF).keys()].sort((a,b)=>r.filter(c=>c.needs[b]).length-r.filter(c=>c.needs[a]).length);
   const base=r.filter(c=>!A.hide||c.k>0);
   const by=[...Array(NF+1).keys()].reverse().map(k=>({k,v:base.filter(c=>c.k===k).length})).filter(x=>x.v>0);
-  $('dist').innerHTML=`<button data-k="" class="${A.k===null?'on':''}"><b>${n(base.length)}</b>all</button>`+by.map(x=>`<button data-k="${x.k}" class="${A.k===x.k?'on':''}"><b>${n(x.v)}</b>need ${x.k} feature${x.k===1?'':'s'}</button>`).join('');
+  $('dist').innerHTML=`<button data-k="" class="${A.k===null?'on':''}">All databases <b>${n(base.length)}</b></button>`+by.map(x=>`<button data-k="${x.k}" class="${A.k===x.k?'on':''}">Need ${x.k} feature${x.k===1?'':'s'} <b>${n(x.v)}</b></button>`).join('');
   document.querySelectorAll('#dist button').forEach(b=>b.onclick=()=>{A.k=b.dataset.k===''?null:+b.dataset.k;all(rows())});
   const q=A.q.trim().toLowerCase();
   const key=A.sort;
@@ -382,26 +393,27 @@ function all(r){
   const list=base.filter(c=>A.k===null||c.k===A.k).filter(c=>!q||(c.name+' '+c.db+' '+c.cmx+' '+c.ecr).toLowerCase().includes(q));
   // build groups by ECR ID (blank ECR = its own group)
   const gm=new Map();
-  list.forEach(c=>{const g=c.ecr||('—'+c.cmx);if(!gm.has(g))gm.set(g,{ecr:c.ecr,dbs:[]});gm.get(g).dbs.push(c)});
+  const isVisn=c=>/\bVISN\b/i.test(c.name);
+  list.forEach(c=>{const g=isVisn(c)?'VISN':(c.ecr||('—'+c.cmx));if(!gm.has(g))gm.set(g,{key:g,ecr:c.ecr,visn:g==='VISN',dbs:[]});gm.get(g).dbs.push(c)});
   const groups=[...gm.values()].map(g=>{g.dbs.sort(dbSort);g.needs=[...Array(NF).keys()].map(i=>g.dbs.filter(c=>c.needs[i]).length);
-    g.k=g.needs.filter(x=>x>0).length;g.name=g.dbs[0].name;g.multi=g.dbs.length>1;return g});
+    g.k=g.needs.filter(x=>x>0).length;g.name=g.visn?'VISN (VA networks)':g.dbs[0].name;g.ecrs=[...new Set(g.dbs.map(c=>c.ecr).filter(Boolean))];g.multi=g.dbs.length>1;return g});
   const gv=g=>key==='k'?g.k:key==='name'?g.name.toLowerCase():key==='cmx'?g.dbs[0].cmx:key==='ecr'?g.ecr:g.needs[+key.slice(1)];
   if(A.group) groups.sort((a,b)=>cmp(gv(a),gv(b))||b.k-a.k||b.dbs.length-a.dbs.length||a.name.localeCompare(b.name));
   allList=A.group?groups.flatMap(g=>g.dbs):[...list].sort(dbSort);
   const multiG=groups.filter(g=>g.multi), multiDb=multiG.reduce((s,g)=>s+g.dbs.length,0);
-  $('allSub').textContent=`${n(allList.length)} database${allList.length===1?'':'s'}, most features needed first.`+(A.group?` Accounts with several databases are grouped (${n(multiG.length)} accounts, ${n(multiDb)} databases); click an account row to expand or collapse.`:'')+' Click a column header to re-sort.';
+  $('allSub').textContent=`${n(allList.length)} database${allList.length===1?'':'s'}, sorted by ${key==='k'?'features needed':key==='name'?'account':key==='cmx'?'database':key==='ecr'?'ECR ID':esc(sh(FEATURES[+key.slice(1)]))+(A.group?' count':'')}${A.dir<0?' (highest first)':' (A to Z)'}.`+(A.group?` Accounts with several databases are grouped (${n(multiG.length)} groups, ${n(multiDb)} databases), and all VISN (VA network) databases form one group whatever their ECR ID; click a group row to see its databases.`:'')+' Click a column header to re-sort.';
   const th=(k,l,cls='')=>`<th class="sortable ${cls} ${A.sort===k?'on':''}" data-s="${k}">${l}${A.sort===k?(A.dir<0?' ▼':' ▲'):''}</th>`;
   const dbRow=(c,child)=>`<tr class="${child?'child':''}"><td>${child?'<span class="ind">└</span>':''}${esc(c.name)}</td><td>${esc(c.db)}</td><td>${esc(c.cmx)}</td><td>${esc(c.ecr)}</td><td>${esc(c.ct)}</td><td class="fc"><b>${c.k}</b></td>${order.map(i=>`<td class="fc">${c.needs[i]?'<span class="dot" title="Needed"></span>':'<span class="dot na"></span>'}</td>`).join('')}</tr>`;
-  const grpRow=g=>{const open=!A.col.has(g.ecr);return `<tr class="grp" data-g="${esc(g.ecr)}"><td colspan="2"><span class="car">${open?'▾':'▸'}</span><b>${esc(g.name)}</b></td><td><b>${n(g.dbs.length)} databases</b></td><td><b>${esc(g.ecr)}</b></td><td></td><td class="fc" title="Different features needed across these databases"><b>${g.k}</b></td>${order.map(i=>`<td class="fc">${g.needs[i]?`<span class="gn">${g.needs[i]}</span>`:'<span class="dot na"></span>'}</td>`).join('')}</tr>`};
+  const grpRow=g=>{const open=A.exp.has(g.key);return `<tr class="grp" data-g="${esc(g.key)}"><td colspan="2"><span class="car">${open?'▾':'▸'}</span><b>${esc(g.name)}</b></td><td><b>${n(g.dbs.length)} databases</b></td><td><b>${g.ecrs.length>1?n(g.ecrs.length)+' ECR IDs':esc(g.ecr)}</b></td><td></td><td class="fc" title="Different features needed across these databases"><b>${g.k}</b></td>${order.map(i=>`<td class="fc">${g.needs[i]?`<span class="gn">${g.needs[i]}</span>`:'<span class="dot na"></span>'}</td>`).join('')}</tr>`};
   const LIM=500;let out=[],cnt=0;
-  if(A.group){for(const g of groups){if(cnt>=LIM)break;
-      if(g.multi){out.push(grpRow(g));if(!A.col.has(g.ecr))g.dbs.forEach(c=>out.push(dbRow(c,true)));}else out.push(dbRow(g.dbs[0],false));
+  if(A.group){for(const g of groups){if(out.length>=LIM)break;
+      if(g.multi){out.push(grpRow(g));if(A.exp.has(g.key))g.dbs.forEach(c=>out.push(dbRow(c,true)));}else out.push(dbRow(g.dbs[0],false));
       cnt+=g.dbs.length;}}
   else{allList.slice(0,LIM).forEach(c=>out.push(dbRow(c,false)));cnt=Math.min(LIM,allList.length)}
   $('allWrap').innerHTML=`<div class="tbl"><table><thead><tr>${th('name','Account')}<th>Database name</th>${th('cmx','Databases')}${th('ecr','ECR ID')}<th>Client type</th>${th('k','Features needed','fc')}${order.map(i=>th('f'+i,esc(sh(FEATURES[i])),'fc')).join('')}</tr></thead><tbody>`+out.join('')+
     `</tbody></table><div class="more">${allList.length>cnt?`Showing first ${n(cnt)} of ${n(allList.length)} databases. Export CSV includes all.`:`${n(allList.length)} databases.`}${A.group?' Account rows show how many of that account’s databases need each feature.':''}</div></div>`;
   document.querySelectorAll('#allWrap th.sortable').forEach(h=>h.onclick=()=>{const s=h.dataset.s;if(A.sort===s)A.dir*=-1;else{A.sort=s;A.dir=(s==='name'||s==='cmx'||s==='ecr')?1:-1}all(rows())});
-  document.querySelectorAll('#allWrap tr.grp').forEach(tr=>tr.onclick=()=>{const g=tr.dataset.g;A.col.has(g)?A.col.delete(g):A.col.add(g);all(rows())});
+  document.querySelectorAll('#allWrap tr.grp').forEach(tr=>tr.onclick=()=>{const g=tr.dataset.g;A.exp.has(g)?A.exp.delete(g):A.exp.add(g);all(rows())});
 }
 
 function render(){const r=rows();heads(r);gates(r);list(r);all(r)}
