@@ -143,6 +143,10 @@ tr.child td{background:#FCFAF6}
 .cust ul{margin:0 0 10px;padding-left:18px}
 .cust li{margin:0 0 6px}
 .cust .ex{display:block;font-size:12px;color:var(--ink);font-style:italic}
+.ref{font-size:14px;line-height:1.55;max-width:1040px}
+.ref ol{margin:8px 0 0;padding-left:20px}
+.ref li{margin:0 0 8px}
+.ref .cust{border-top:0;padding-top:0;margin-top:8px}
 .foot{margin-top:26px;font-size:12px;color:var(--ink);border-top:1px solid var(--ivory);padding-top:12px}
 .foot p{margin:0 0 6px}
 @media(max-width:860px){.heads{grid-template-columns:1fr}}
@@ -173,32 +177,8 @@ window.DASHBOARD_DATA = {"F":["Multi-database (Org Picker)","HR Download (automa
     <div class="bd">
       <ul class="lead" id="exLead"></ul>
       <p class="so" id="exSo"></p>
-      <div class="how">
-          <h3>How we counted</h3>
-          <ol>
-            <li><b>Latest data.</b> Built from the refreshed directory (<span id="exSrc"></span>, <span id="exGen"></span>).</li>
-            <li><b>Counted by database.</b> Each database is counted once. An account with several databases counts once per database.</li>
-            <li><b>No customer count yet.</b> We report databases until "customer" has an agreed definition.</li>
-            <li><b>Only databases still to be migrated are counted.</b> Excluded: completed migrations, Net New, TTP Cutover, cancellations, Connect, Internal and DirectCourse.</li>
-            <li><b>Six missing features.</b> Multi-database (Org Picker), HR Download, Self-registration link, SCORM Uploader, Linked Tests and CK Nursing. Multi-database now uses the updated Org Picker definition, which is why the blocked count fell after the data refresh.</li>
-          </ol>
-      </div>
-      <div class="cust">
-        <h3>Why we count databases, not customers</h3>
-        <p>For EPM, “customer” is a hard thing to define for a few different reasons:</p>
-        <ul>
-          <li>A “customer” (one ECR) could have multiple databases if they license our content with different delivery methods. <span class="ex">Example: Baptist Health Corbin and a TON of others – this is very common.</span></li>
-          <li>A “customer” (one or multiple ECRs) could have multiple databases if the health system level licenses some of our content, while one of the hospitals license another curriculum separately. <span class="ex">Example: Mount Sinai</span></li>
-          <li>A “customer” (one ECR) could have multiple databases if they chose to manage the content they license on a per hospital basis, instead of at the health system level. <span class="ex">Example: VA</span></li>
-          <li>A “customer” could consist of multiple databases that are part of a health system. This health system may or may not have multiple ECR IDs. <span class="ex">Example: Common Spirit</span></li>
-          <li>A “customer” could consist of multiple databases loosely tied together as part of a consortium or affiliated network. This is most likely multiple ECR IDs. <span class="ex">Example: NEAH, Medstar</span></li>
-          <li>A “customer” could potentially have more than one of the above going on! <span class="ex">Example: Kaiser Permanente</span></li>
-        </ul>
-        <p>Truly, I don’t know if there is a way to translate databases into “customers” given all of these nuances (and why we’ve stuck with databases for so long). Also, the number of “customers” on EPM is not going to ever be the same as the number of “customers” on CLH, as we will need to combine EPM databases when we move them to CLH. <span class="ex">Example: Fortis Hospitals</span></p>
-        <p>Many EPM databases do not have unique ECR IDs right now. Since the VA is contracted at the national level, there is a singular ECR, but ~170 databases associated with the contract, meaning that we assigned them ECR-ID_a/b/c/etc as a placeholder for the ECR ID since we couldn’t reuse the original. We haven’t yet worked out how to translate all of those into unique ECR IDs or even if this is something we will need to do if we can combine all of these on CLH.</p>
-      </div>
       <div class="oq"><h3>Decisions needed</h3><ol id="exOQ"></ol></div>
-      <p class="nt">This summary and section 2 always show the full picture. Sections 3 to 7 change with the filters.</p>
+      <p class="nt">This summary and section 2 always show the full picture. Sections 3 to 7 change with the filters. Sections 8 and 9 explain how the numbers were counted.</p>
     </div>
   </details>
 
@@ -253,6 +233,34 @@ window.DASHBOARD_DATA = {"F":["Multi-database (Org Picker)","HR Download (automa
   </div>
   <div class="dist" id="dist"></div>
   <div id="allWrap"></div>
+  </section>
+
+  <section class="sec ref">
+  <h2><span class="num">8</span>How we counted</h2>
+  <ol>
+            <li><b>Latest data.</b> Built from the refreshed directory (<span id="exSrc"></span>, <span id="exGen"></span>).</li>
+            <li><b>Counted by database.</b> Each database is counted once. An account with several databases counts once per database.</li>
+            <li><b>No customer count yet.</b> We report databases until "customer" has an agreed definition.</li>
+            <li><b>Only databases still to be migrated are counted.</b> Excluded: completed migrations, Net New, TTP Cutover, cancellations, Connect, Internal and DirectCourse.</li>
+            <li><b>Six missing features.</b> Multi-database (Org Picker), HR Download, Self-registration link, SCORM Uploader, Linked Tests and CK Nursing. Multi-database now uses the updated Org Picker definition, which is why the blocked count fell after the data refresh.</li>
+          </ol>
+  </section>
+
+  <section class="sec ref">
+  <h2><span class="num">9</span>Why we count databases, not customers</h2>
+  <div class="cust">
+  <p>For EPM, “customer” is a hard thing to define for a few different reasons:</p>
+        <ul>
+          <li>A “customer” (one ECR) could have multiple databases if they license our content with different delivery methods. <span class="ex">Example: Baptist Health Corbin and a TON of others – this is very common.</span></li>
+          <li>A “customer” (one or multiple ECRs) could have multiple databases if the health system level licenses some of our content, while one of the hospitals license another curriculum separately. <span class="ex">Example: Mount Sinai</span></li>
+          <li>A “customer” (one ECR) could have multiple databases if they chose to manage the content they license on a per hospital basis, instead of at the health system level. <span class="ex">Example: VA</span></li>
+          <li>A “customer” could consist of multiple databases that are part of a health system. This health system may or may not have multiple ECR IDs. <span class="ex">Example: Common Spirit</span></li>
+          <li>A “customer” could consist of multiple databases loosely tied together as part of a consortium or affiliated network. This is most likely multiple ECR IDs. <span class="ex">Example: NEAH, Medstar</span></li>
+          <li>A “customer” could potentially have more than one of the above going on! <span class="ex">Example: Kaiser Permanente</span></li>
+        </ul>
+        <p>Truly, I don’t know if there is a way to translate databases into “customers” given all of these nuances (and why we’ve stuck with databases for so long). Also, the number of “customers” on EPM is not going to ever be the same as the number of “customers” on CLH, as we will need to combine EPM databases when we move them to CLH. <span class="ex">Example: Fortis Hospitals</span></p>
+        <p>Many EPM databases do not have unique ECR IDs right now. Since the VA is contracted at the national level, there is a singular ECR, but ~170 databases associated with the contract, meaning that we assigned them ECR-ID_a/b/c/etc as a placeholder for the ECR ID since we couldn’t reuse the original. We haven’t yet worked out how to translate all of those into unique ECR IDs or even if this is something we will need to do if we can combine all of these on CLH.</p>
+  </div>
   </section>
 
   <div class="foot">
@@ -360,7 +368,7 @@ function execSummary(){
   const opTop=Object.entries(opG).sort((a,b)=>b[1]-a[1])[0];
   const opAcct=opTop?(g.find(c=>c.ecr===opTop[0])||{}).name:'';
   $('exOQ').innerHTML=`
-    <li><b>Define "customer".</b> Until agreed, we report databases only (see "Why we count databases, not customers" above).</li>
+    <li><b>Define "customer".</b> Until agreed, we report databases only (see section 9, "Why we count databases, not customers").</li>
     <li><b>Is the database list a workable size?</b> Lists for a single feature range from ${n(Math.min(...cnt))} to ${n(biggest)} databases.</li>`;
   $('exSrc').textContent=D.source||'Client Directory.xlsx';$('exGen').textContent=D.generated||'';
   

@@ -4,13 +4,15 @@ A dashboard that shows why building one feature doesn't move EPM databases to CL
 
 ## What it shows
 
-1. **Executive summary:** headline statements, how we counted, why we count databases rather than customers, and decisions needed.
+1. **Executive summary:** headline statements, what this means, and decisions needed.
 2. **At a glance:** key counts and how the number of databases able to migrate grows as each feature is built.
 3. **Headline metrics:** databases blocked by at least one feature, by two or more, and the most common need.
 4. **Filters:** country and client type.
 5. **Features needed:** one card per feature; select features to list the databases that need them.
 6. **Databases by selected feature:** the filtered list, with CSV export.
 7. **Databases sorted by features needed:** every database, grouped by ECR ID, sortable, with CSV export.
+8. **How we counted:** the scope and counting rules.
+9. **Why we count databases, not customers:** why EPM databases can't simply be translated into customers.
 
 ## Repository layout
 
