@@ -4,23 +4,13 @@ A dashboard that shows why building one feature doesn't move EPM databases to CL
 
 ## What it shows
 
-1. **Executive summary:** why it matters, headline statements, what this means, and decisions needed.
-2. **At a glance:** key counts; contract value, learner and admin totals; a breakdown of databases that need review; and how the number of databases able to migrate grows with each build step.
-3. **What's at stake:** contract value, learners and admins at blocked databases.
-4. **Features needed:** one card per feature; select features (any or all) to list the databases that need them.
-5. **Databases by selected feature:** the filtered list, with CSV export.
-6. **Databases sorted by features needed:** every database, rolled up by account (ECR ID). All VISN (VA network) databases form one group regardless of ECR or CMX ID. Shows contract value, learners and admins (summed for each group). Opens sorted by Multi-database (Org Picker) count; click any column to re-sort; click a group to see its databases. CSV export lists every database.
-7. **How we counted:** the scope and counting rules, plus a glossary of terms.
-8. **Why we count databases, not customers:** why EPM databases can't simply be translated into customers.
-
-## Editing text in the browser
-
-1. Open the dashboard and click **Edit text** (bottom right).
-2. Click any heading, hint or paragraph and type your changes. Numbers, cards and tables come from the data and can't be edited this way.
-3. Click **Save edited copy**. Your browser downloads an updated HTML file.
-4. Replace `index.html` (or the single-file dashboard) with the downloaded file, then commit and push. If you edit the single-file version, ask for it to be converted back to `index.html` so the data stays in `data/dashboard-data.js`.
-
-Edits aren't saved until you download the copy; reloading the page discards them.
+1. **Executive summary:** headline statements, how we counted, why we count databases rather than customers, and decisions needed.
+2. **At a glance:** key counts and how the number of databases able to migrate grows as each feature is built.
+3. **Headline metrics:** databases blocked by at least one feature, by two or more, and the most common need.
+4. **Filters:** country and client type.
+5. **Features needed:** one card per feature; select features to list the databases that need them.
+6. **Databases by selected feature:** the filtered list, with CSV export.
+7. **Databases sorted by features needed:** every database, grouped by ECR ID, sortable, with CSV export.
 
 ## Repository layout
 
@@ -34,7 +24,6 @@ requirements.txt               Python dependency for the build script
 .github/workflows/pages.yml    Publishes the site to GitHub Pages on push to main
 .nojekyll                      Tells GitHub Pages to serve files as-is
 robots.txt                     Asks search engines not to index the site
-standalone/                    Single-file copy of the dashboard (data, fonts and icon built in) for emailing or opening offline
 ```
 
 ## Hosting on GitHub Pages
@@ -67,11 +56,9 @@ Columns are found by header name, so added or moved columns don't break the buil
 ## Scope and method
 
 - **Unit:** one record per CMX ID (one row per database). Rows without a valid CMX ID are left out.
-- **Workbook filters:** if the main directory tab has Excel filters set, the build script reads and applies them. Otherwise it uses `EXCLUDE_PHASE` and `EXCLUDE_STATUS`, which mirror those filters (Phase: Cancel/Remove, Cancelled, Internal, NA, Data Moved to CLH, DirectCourse; Migration Status: Complete, NA, Net New, TTP Cutover, Handoff to AM).
+- **Workbook filters:** if the main directory tab has Excel filters set (for example Phase excluding Cancel/Remove, and Migration Status excluding Complete, Net New, TTP Cutover and NA), the build script reads and applies them. Otherwise it uses `EXCLUDE_PHASE` and `EXCLUDE_STATUS`.
 - **Also excluded:** databases marked Canceled under CLH account status or Change Type, and client types Workforce Development, Internal MCS Site and all Connect types (`EXCLUDE_CLIENT_TYPE`).
 - **Features:** Multi-database (Org Picker), HR Download, Self-registration link, SCORM Uploader, LinkedContent / Linked Tests (combined) and CK Nursing (subscription and Skills link combined). A feature counts as needed when its column is "Yes".
-- **Build order:** steps are chosen to release the most databases at each step. Multi-database (Org Picker) is built together with HR Download because it depends on it (set in `DEP` in `index.html`).
-- **Needs review breakdown:** uses Country, SSO Eligibility and Mosby Skills to show which databases rely on international support or complex/Connect SSO, which may be ready, and which have incomplete records.
 
 ## Data sensitivity
 
