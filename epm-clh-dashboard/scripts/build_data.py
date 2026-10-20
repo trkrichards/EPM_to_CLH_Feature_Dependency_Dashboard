@@ -34,14 +34,16 @@ HEADERS = {
     "selfreg": "Self-Registration Link on Login Page",
     "ck_sub": "CK Nursing Subscription", "ck_link": "CK Nursing Link on Skills Instance",
     "change_type": "Change Type",
+    "sso": "SSO Eligibility", "skills": "Functionality: Mosby Skills",
 }
 
 # Scope: databases still to migrate.
 # If the main tab has Excel filters set, those filters define the base scope
 # (e.g. Phase excludes Cancel/Remove; Migration Status excludes Complete, Net New,
 # TTP Cutover and NA). Otherwise the EXCLUDE_PHASE / EXCLUDE_STATUS lists below apply.
-EXCLUDE_PHASE = {"Cancel/Remove", "Cancelled", "Internal", "NA", "Data Moved to CLH"}
-EXCLUDE_STATUS = {"Complete", "NA", "Net New"}  # TTP Cutover rows all carry Phase "NA"
+# Fallback rules mirror the Excel filters used previously on the main tab.
+EXCLUDE_PHASE = {"Cancel/Remove", "Cancelled", "Internal", "NA", "Data Moved to CLH", "DirectCourse"}
+EXCLUDE_STATUS = {"Complete", "NA", "Net New", "TTP Cutover", "Handoff to AM"}
 REPORTED_STATUS = ["Complete", "Net New", "TTP Cutover"]
 EXCLUDE_CLIENT_TYPE = {"Workforce Development", "Internal MCS Site",
                        "Connect Partner", "EPM Connect", "LMS Connect", "Clinical Skills Connect"}
@@ -152,8 +154,8 @@ def main():
         ex["Excel filter"] = len(rows) - len(scope)
     else:
         scope = [r for r in rows
-                 if r[c["phase"]] not in EXCLUDE_PHASE
-                 and r[c["status"]] not in EXCLUDE_STATUS
+                 if str(r[c["phase"]] or "").strip() not in EXCLUDE_PHASE
+                 and str(r[c["status"]] or "").strip() not in EXCLUDE_STATUS
                  and r[c["account"]]]
     ex["After filter"] = len(scope)
 
@@ -190,6 +192,8 @@ def main():
             "l": num(r[c["learners"]]),
             "a": num(r[c["admins"]]),
             "needs": [1 if g[3](r, c) else 0 for g in GATES],
+            "sso": str(r[c["sso"]] or "").strip(),
+            "skills": 1 if yes(r[c["skills"]]) else 0,
         })
     ex["Duplicate CMX ID"] = dup
     data = {

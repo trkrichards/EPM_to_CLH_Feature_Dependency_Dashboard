@@ -104,7 +104,7 @@ input[type=search]{font:inherit;padding:5px 8px;border:1px solid var(--ivory);bo
 h2 .num{color:var(--ink);font-family:"National 2",sans-serif;font-size:14px;margin-right:8px;vertical-align:3px}
 .dist{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px}
 .dist button{font:inherit;font-size:12px;border:1px solid var(--ivory);background:var(--paper);border-radius:var(--r);padding:6px 10px;cursor:pointer;color:var(--g)}
-.dist button b{font-size:15px;margin-right:4px}
+.dist button b{font-size:15px;margin-left:6px}
 .dist button.on{border-color:var(--o);background:#fff}
 th.sortable{cursor:pointer;white-space:nowrap}
 th.sortable:hover{background:var(--paper)}
@@ -125,7 +125,7 @@ tr.child td{background:#FCFAF6}
 .agk>div{background:var(--paper);border-radius:var(--r);padding:10px 14px}
 .agk .v{font-family:"Tiempos Text",serif;font-size:26px;line-height:1.1}
 .agk .l{font-size:12px;color:var(--ink)}
-.cum{display:grid;grid-template-columns:44px minmax(200px,1.3fr) 80px minmax(200px,2fr) 130px 70px;gap:6px 10px;align-items:center;font-size:13px}
+.cum{display:block}
 .cum .hd{font-size:11px;color:var(--ink);font-weight:700;border-bottom:1px solid var(--ivory);padding-bottom:4px}
 .cum .st{color:var(--ink);text-align:center}
 .cum .ad{text-align:right;font-weight:700;color:var(--g)}
@@ -137,7 +137,7 @@ tr.child td{background:#FCFAF6}
 .cum .bl{color:var(--ink);white-space:nowrap;text-align:right}
 .cum .ft{grid-column:1/-1;font-size:12px;color:var(--ink);margin-top:4px}
 .how{border-top:1px solid var(--ivory);padding-top:14px}
-@media(max-width:900px){.agk{grid-template-columns:repeat(2,1fr)}.cum{grid-template-columns:28px 1fr 50px 1fr}.cum .tot,.cum .bl{grid-column:span 2}}
+@media(max-width:900px){.agk{grid-template-columns:repeat(2,1fr)}}
 .cust{border-top:1px solid var(--ivory);padding-top:14px;margin-top:16px;max-width:1000px}
 .cust p{margin:0 0 10px}
 .cust ul{margin:0 0 10px;padding-left:18px}
@@ -147,17 +147,59 @@ tr.child td{background:#FCFAF6}
 .ref ol{margin:8px 0 0;padding-left:20px}
 .ref li{margin:0 0 8px}
 .ref .cust{border-top:0;padding-top:0;margin-top:8px}
+.tt{border-collapse:collapse;font-size:13px;width:100%;max-width:900px;margin-bottom:6px}
+.tt th{position:static;font-size:11px;text-align:right;color:var(--ink);padding:6px 8px;border-bottom:1px solid var(--ivory);background:#fff}
+.tt th:first-child{text-align:left}
+.tt td{padding:6px 8px;border-bottom:1px solid var(--paper);text-align:right;font-variant-numeric:tabular-nums}
+.tt td:first-child{text-align:left;font-weight:700}
+.tt .cov{font-weight:400;color:var(--ink);font-size:11px}
+.hd2{border-left-color:var(--ink)}
+th.r{text-align:right}
+.hd .nt2{font-size:12px;color:var(--ink);margin-top:6px}
+.cumt{width:100%;border-collapse:collapse;table-layout:fixed;font-size:13px}
+.cumt th{position:static;background:#fff;font-size:11px;font-weight:700;color:var(--ink);text-align:left;vertical-align:bottom;padding:6px 8px;border-bottom:1px solid var(--ivory);line-height:1.3}
+.cumt td{padding:7px 8px;border-bottom:1px solid var(--paper);vertical-align:middle}
+.cumt .c{text-align:center}.cumt .r{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cumt .ad{font-weight:700}.cumt .pc{color:var(--ink)}
+.cumt tr.z td{color:var(--ink)}
+.cumt .bar{display:flex;height:18px;background:var(--paper);border-radius:var(--r);overflow:hidden}
+.cumt .bar .pv{display:block;height:100%;background:#B8AC9A}.cumt .bar .nw{display:block;height:100%;background:var(--o)}
+.cumt .hk{font-weight:400;white-space:nowrap}.cumt .hk i{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 4px 0 0;vertical-align:-1px}
+.cumt .hk i+i,.cumt .hk i:nth-of-type(2){margin-left:10px}
+.cum .ft{font-size:12px;color:var(--ink);margin-top:6px}
+@media(max-width:900px){.cumt col:nth-child(4){width:24%}}
+.selbar{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;font-size:13px;color:var(--ink);margin:0 0 12px}
 .foot{margin-top:26px;font-size:12px;color:var(--ink);border-top:1px solid var(--ivory);padding-top:12px}
 .foot p{margin:0 0 6px}
 @media(max-width:860px){.heads{grid-template-columns:1fr}}
+
+/* ---------- Edit mode ---------- */
+.edbar{position:fixed;right:18px;bottom:18px;z-index:50;display:flex;gap:8px;align-items:center;background:#fff;border:1px solid var(--ivory);border-radius:var(--r);padding:8px 10px;box-shadow:0 2px 10px rgba(0,0,0,.08);font-size:13px}
+.edbar .msg{display:none;color:var(--ink);max-width:340px}
+body.editing .edbar .msg{display:block}
+body.editing .edbar .on-edit{display:inline-block}
+.edbar .on-edit{display:none}
+body.editing [data-edit]{outline:1px dashed var(--blue);outline-offset:2px;cursor:text}
+body.editing [data-edit]:focus{outline:2px solid var(--blue);background:#f6f8ff}
+@media print{.edbar{display:none}}
+body:not(.editing) [data-edit]:empty{display:none}
+.exec .why{font-size:15px;margin:0 0 12px;padding:10px 14px;border-left:5px solid var(--o);background:#fff}
+.rvn{font-size:13px;color:var(--g);background:var(--paper);border-radius:var(--r);padding:10px 14px;margin:8px 0 0;max-width:900px}
+.cumt .dep{font-size:11px;color:var(--ink);font-weight:400;margin-top:2px}
+.ref .gl{margin:6px 0 0;padding-left:18px}.ref .gl li{margin:0 0 4px}
 </style>
 </head>
 <body>
 <script src="data/dashboard-data.js"></script>
+<div class="edbar" id="edbar" aria-live="polite">
+  <span class="msg">Editing: click any heading or text to change it. Numbers and tables update from the data and can't be edited here.</span>
+  <button class="btn" id="edToggle">Edit text</button>
+  <button class="btn pri on-edit" id="edSave">Save edited copy</button>
+</div>
 <div class="wrap">
   <div class="top"><div>
-    <h1>Why building one feature doesn't move EPM databases to <em>CLH</em></h1>
-    <p class="sub">A database can migrate only when <b>every</b> feature it relies on exists in CLH. Most databases need several.</p>
+    <h1 data-edit="e1">Why building one feature doesn't move EPM databases to <em>CLH</em></h1>
+    <p class="sub" data-edit="e2">A database can migrate only when <b>every</b> feature it relies on exists in CLH. Most databases need several.</p>
   </div><svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1230.1435167 170.0787402">
   <!-- Generator: Adobe Illustrator 29.3.1, SVG Export Plug-In . SVG Version: 2.1.0 Build 151)  -->
   <defs>
@@ -173,52 +215,47 @@ tr.child td{background:#FCFAF6}
   <details class="exec" open>
     <summary><span><span class="num" style="color:var(--ink);font-family:'National 2',sans-serif;font-size:14px;margin-right:8px;vertical-align:3px">1</span>Executive summary</span> <span class="tg"></span></summary>
     <div class="bd">
+      <p class="why" id="exWhy"></p>
       <ul class="lead" id="exLead"></ul>
       <p class="so" id="exSo"></p>
-      <div class="oq"><h3>Decisions needed</h3><ol id="exOQ"></ol></div>
-      <p class="nt">This summary and section 2 always show the full picture. Sections 3 to 7 change with the filters. Sections 8 and 9 explain how the numbers were counted.</p>
+      <div class="oq"><h3 data-edit="e3">Decisions needed</h3><ol id="exOQ"></ol></div>
+      <p class="nt" data-edit="e4">How to use this document: Section 2 shows an overview; sections 4 to 6 let you select features and explore the databases.</p>
     </div>
   </details>
 
   <section class="sec">
-  <h2><span class="num">2</span>At a glance</h2>
-  <p class="hint">Full picture, not affected by the filters.</p>
+  <h2 data-edit="e5"><span class="num">2</span>At a glance</h2>
+  <p class="hint" data-edit="e6"></p>
       <div class="ag">
         <div class="agk" id="agK"></div>
-        <h4>Databases able to migrate as each feature is built</h4>
-        <p class="hint" style="margin:0 0 8px">Each step adds one feature to everything built before it. Features are ordered so each step releases the most databases.</p>
+        <h4>Contract value, learners and admins</h4>
+        <div id="agT"></div>
+        <p class="rvn" id="agR"></p>
+        <h4 data-edit="e7">Databases able to migrate as each feature is built</h4>
+        <p class="hint" style="margin:0 0 8px" data-edit="e8">Each step adds to everything built before it. Steps are ordered so each one releases the most databases. Multi-database (Org Picker) and HR Download are built together because Org Picker depends on the HR data download.</p>
         <div class="cum" id="agCum"></div>
       </div>
   </section>
 
   <section class="sec">
-  <h2><span class="num">3</span>Headline metrics</h2>
-  <p class="hint">Changes with the filters.</p>
-  <div class="heads" id="heads"></div>
+  <h2 data-edit="e11"><span class="num">3</span>What’s at stake</h2>
+  <p class="hint" data-edit="e12">Contract value, learners and admins at databases blocked by at least one of the six features.</p>
+  <div class="heads" id="heads2"></div>
   </section>
 
-  <section class="sec">
-  <h2><span class="num">4</span>Filters</h2>
-  <p class="hint">Narrow every section below by country or client type.</p>
-  </section>
-  <div class="controls">
-    <span>Country <select id="regSel"></select></span>
-    <span>Client type <select id="ctSel"></select></span>
-    <span>Show databases that need <span class="seg" id="modeSeg"><button data-m="any" class="on">Any selected feature</button><button data-m="all">All selected features</button></span></span>
-    <button class="btn" id="clearBtn">Clear selection</button>
-  </div>
 
 
   <section class="sec">
-  <h2><span class="num">5</span>Features needed</h2>
-  <p class="hint">Click a feature to see which databases need it (listed in section 6).</p>
+  <h2 data-edit="e13"><span class="num">4</span>Features needed</h2>
+  <p class="hint" data-edit="e14">Click a feature to see which databases need it (listed in section 5).</p>
+  <div class="selbar">Show databases that need <span class="seg" id="modeSeg"><button data-m="any" class="on">Any selected feature</button><button data-m="all">All selected features</button></span> <button class="btn" id="clearBtn">Clear selection</button></div>
   <div class="gates" id="gateCards"></div>
   </section>
 
   <section class="sec">
 
   <div class="listhd">
-    <div><h2><span class="num">6</span>Databases by selected feature</h2><div class="hint" id="listSub" style="margin:0"></div></div>
+    <div><h2 data-edit="e15"><span class="num">5</span>Databases by selected feature</h2><div class="hint" id="listSub" style="margin:0"></div></div>
     <div style="display:flex;gap:10px;align-items:center"><input type="search" id="q" placeholder="Search name, CMX or ECR ID" aria-label="Search databases"><button class="btn pri" id="exportBtn" disabled>Export CSV</button></div>
   </div>
   <div id="listWrap"></div>
@@ -226,7 +263,7 @@ tr.child td{background:#FCFAF6}
 
   <section class="sec">
   <div class="listhd">
-    <div><h2><span class="num">7</span>Databases sorted by features needed</h2><div class="hint" id="allSub" style="margin:0"></div></div>
+    <div><h2 data-edit="e16"><span class="num">6</span>Databases sorted by features needed</h2><div class="hint" id="allSub" style="margin:0"></div></div>
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><label style="font-size:13px;color:var(--ink);display:inline-flex;gap:5px;align-items:center"><input type="checkbox" id="groupEcr" checked> Group by ECR ID</label><label style="font-size:13px;color:var(--ink);display:inline-flex;gap:5px;align-items:center"><input type="checkbox" id="hideNone" checked> Hide databases that need none of the six</label><input type="search" id="q2" placeholder="Search name, CMX or ECR ID" aria-label="Search all databases"><button class="btn pri" id="exportAllBtn">Export CSV</button></div>
   </div>
   <div class="dist" id="dist"></div>
@@ -234,51 +271,85 @@ tr.child td{background:#FCFAF6}
   </section>
 
   <section class="sec ref">
-  <h2><span class="num">8</span>How we counted</h2>
+  <h2 data-edit="e17"><span class="num">7</span>How we counted</h2>
   <ol>
-            <li><b>Latest data.</b> Built from the refreshed directory (<span id="exSrc"></span>, <span id="exGen"></span>).</li>
-            <li><b>Counted by database.</b> Each database is counted once. An account with several databases counts once per database.</li>
-            <li><b>No customer count yet.</b> We report databases until "customer" has an agreed definition.</li>
-            <li><b>Only databases still to be migrated are counted.</b> Excluded: completed migrations, Net New, TTP Cutover, cancellations, Connect, Internal and DirectCourse.</li>
-            <li><b>Six missing features.</b> Multi-database (Org Picker), HR Download, Self-registration link, SCORM Uploader, Linked Tests and CK Nursing. Multi-database now uses the updated Org Picker definition, which is why the blocked count fell after the data refresh.</li>
+            <li data-edit="e18"><b>Data pull.</b> Built from the <span id="exSrc">Client Directory</span>, which is refreshed monthly from a finance file.</li>
+            <li data-edit="e19"><b>Counted by database.</b> Each database is counted once.</li>
+            <li data-edit="e20"><b>No customer count yet.</b> We report databases until "customer" has an agreed definition. See section 8.</li>
+            <li data-edit="e21"><b>Data excluded:</b> completed migrations, Net New, TTP Cutover, cancellations, Connect, Internal and DirectCourse.</li>
+            <li data-edit="e22"><b>Six key features to unlock migrations.</b> Multi-database (Org Picker), HR Download, Self-registration link, SCORM Uploader, Linked Tests and CK Nursing.</li>
           </ol>
+  <h3 data-edit="g0" style="margin-top:14px">Terms used</h3>
+  <ul class="gl">
+    <li data-edit="g1"><b>EPM:</b> the current platform these databases are migrating from.</li>
+    <li data-edit="g2"><b>CLH:</b> the platform they are migrating to.</li>
+    <li data-edit="g3"><b>Database (CMX ID):</b> one EPM site, identified by its CMX ID. The unit counted throughout.</li>
+    <li data-edit="g4"><b>ECR ID:</b> the contract or account ID. One ECR ID can cover several databases.</li>
+    <li data-edit="g5"><b>Multi-database (Org Picker):</b> support for organizations that run several databases.</li>
+    <li data-edit="g6"><b>SSO:</b> single sign-on.</li>
+    <li data-edit="g7"><b>HR Download:</b> automated user upload from an HR data feed.</li>
+    <li data-edit="g8"><b>SCORM Uploader (SCO12):</b> upload of SCORM course packages.</li>
+    <li data-edit="g9"><b>Net New, TTP Cutover, DirectCourse:</b> account types that are not part of this EPM to CLH migration and are excluded.</li>
+  </ul>
   </section>
 
   <section class="sec ref">
-  <h2><span class="num">9</span>Why we count databases, not customers</h2>
+  <h2 data-edit="e23"><span class="num">8</span>Why we count databases, not customers</h2>
   <div class="cust">
-  <p>For EPM, “customer” is a hard thing to define for a few different reasons:</p>
+  <p data-edit="e24">For EPM, “customer” is a hard thing to define for a few different reasons:</p>
         <ul>
-          <li>A “customer” (one ECR) could have multiple databases if they license our content with different delivery methods. <span class="ex">Example: Baptist Health Corbin and a TON of others – this is very common.</span></li>
-          <li>A “customer” (one or multiple ECRs) could have multiple databases if the health system level licenses some of our content, while one of the hospitals license another curriculum separately. <span class="ex">Example: Mount Sinai</span></li>
-          <li>A “customer” (one ECR) could have multiple databases if they chose to manage the content they license on a per hospital basis, instead of at the health system level. <span class="ex">Example: VA</span></li>
-          <li>A “customer” could consist of multiple databases that are part of a health system. This health system may or may not have multiple ECR IDs. <span class="ex">Example: Common Spirit</span></li>
-          <li>A “customer” could consist of multiple databases loosely tied together as part of a consortium or affiliated network. This is most likely multiple ECR IDs. <span class="ex">Example: NEAH, Medstar</span></li>
-          <li>A “customer” could potentially have more than one of the above going on! <span class="ex">Example: Kaiser Permanente</span></li>
+          <li data-edit="e25">A “customer” (one ECR) could have multiple databases if they license our content with different delivery methods. <span class="ex">Example: Baptist Health Corbin and many others; this is common.</span></li>
+          <li data-edit="e26">A “customer” (one or multiple ECRs) could have multiple databases if the health system level licenses some of our content, while one of the hospitals license another curriculum separately. <span class="ex">Example: Mount Sinai</span></li>
+          <li data-edit="e27">A “customer” (one ECR) could have multiple databases if they chose to manage the content they license on a per hospital basis, instead of at the health system level. These&nbsp;databases have the same ECR ID (per the contract) with an underscore a/b/c/etc., such as the VA. Work is ongoing to create unique ECR IDs that will replace the current IDs.<span class="ex">Example: VA</span></li>
+          <li data-edit="e28">A “customer” could consist of multiple databases that are part of a health system. This health system may or may not have multiple ECR IDs. <span class="ex">Example: Common Spirit</span></li>
+          <li data-edit="e29">A “customer” could consist of multiple databases loosely tied together as part of a consortium or affiliated network. This is most likely multiple ECR IDs. <span class="ex">Example: NEAH, Medstar</span></li>
+          <li data-edit="e30">A “customer” could potentially have more than one of the above.<span class="ex">Example: Kaiser Permanente</span></li>
         </ul>
-        <p>Truly, I don’t know if there is a way to translate databases into “customers” given all of these nuances (and why we’ve stuck with databases for so long). Also, the number of “customers” on EPM is not going to ever be the same as the number of “customers” on CLH, as we will need to combine EPM databases when we move them to CLH. <span class="ex">Example: Fortis Hospitals</span></p>
-        <p>Many EPM databases do not have unique ECR IDs right now. Since the VA is contracted at the national level, there is a singular ECR, but ~170 databases associated with the contract, meaning that we assigned them ECR-ID_a/b/c/etc as a placeholder for the ECR ID since we couldn’t reuse the original. We haven’t yet worked out how to translate all of those into unique ECR IDs or even if this is something we will need to do if we can combine all of these on CLH.</p>
+        <p data-edit="e31">Note: The number of “customers” on EPM is not going to ever be the same as the number of “customers” on CLH, as we will need to combine EPM databases when we move them to CLH. <span class="ex">Example: Fortis Hospitals</span></p>
+        <p data-edit="e32"></p>
   </div>
   </section>
 
-  <div class="foot">
-    <p><b>Technical notes</b></p>
-    <p><b>Source:</b> <span id="fSrc"></span>, main directory tab (<span id="fRows"></span> rows). Data generated <span id="fGen"></span>.</p>
-    <p><b>Unit:</b> one record per CMX ID (one row per database). A record with more than one database appears once per database. Rows without a CMX ID (<span id="fNoCmx"></span>) are left out.</p>
-    <p><b>Scope:</b> <span id="fN"></span> EPM databases still to migrate. Uses the filters set on the directory's main tab (<span id="fXF"></span> rows filtered out): Phase excludes Cancel/Remove and other non-migration phases (NA, Internal, DirectCourse, Data Moved to CLH); Migration Status excludes Complete (<span id="fC"></span>), Net New (<span id="fNN"></span>), TTP Cutover (<span id="fT"></span>) and NA. Also excludes databases marked Canceled under CLH account status or Change Type (<span id="fCX"></span>); and client types Workforce Development, Internal MCS Site and all Connect types (<span id="fCT"></span>).</p>
-    <p><b>Features:</b> Multi-database (Org Picker), HR Download, Self-registration link, SCORM Uploader, LinkedContent / Linked Tests and CK Nursing. A feature counts as needed when its column is "Yes". Multi-database uses the new "Multi-database (Org Picker)" column, not "Multiple Databases (Old Def)". Linked Tests and LinkedContent (Tests) are combined, as are the two CK Nursing columns.</p>
-  </div>
 </div>
 
 <script>
+// Returns a harmless stand-in if an element was removed while editing, so the page keeps working.
+const $=id=>document.getElementById(id)||{textContent:'',innerHTML:'',value:'',disabled:false,classList:{toggle(){}}};
+/* ---------- EDIT MODE: edit static text in the browser, then save an updated copy ---------- */
+const ORIGINAL_HTML='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+(function(){
+  const tg=$('edToggle'), sv=$('edSave');
+  const setEditing=on=>{document.body.classList.toggle('editing',on);
+    document.querySelectorAll('[data-edit]').forEach(el=>{if(on)el.setAttribute('contenteditable','true');else el.removeAttribute('contenteditable')});
+    tg.textContent=on?'Done editing':'Edit text'};
+  tg.onclick=()=>setEditing(!document.body.classList.contains('editing'));
+  // Keep Enter from creating stray blocks in headings
+  document.addEventListener('keydown',e=>{const el=e.target;if(el&&el.matches&&el.matches('[data-edit]')&&/^H\d$/.test(el.tagName)&&e.key==='Enter'){e.preventDefault()}});
+  sv.onclick=()=>{
+    const doc=new DOMParser().parseFromString(ORIGINAL_HTML,'text/html');
+    let changed=0;
+    document.querySelectorAll('[data-edit]').forEach(el=>{const tgt=doc.querySelector(`[data-edit="${el.dataset.edit}"]`);
+      if(tgt&&tgt.innerHTML!==el.innerHTML){tgt.innerHTML=el.innerHTML;changed++}});
+    doc.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));
+    doc.body.classList.remove('editing');
+    const out='<!DOCTYPE html>\n'+doc.documentElement.outerHTML;
+    const blob=new Blob([out],{type:'text/html;charset=utf-8'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+    a.download=(location.pathname.split('/').pop()||'index.html').replace(/\.html?$/i,'')+'.html';
+    document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},0);
+    alert(changed?`Saved a copy with ${changed} edited block${changed===1?'':'s'}. Replace the original file with the downloaded one to keep your changes.`:'No text has been changed yet.');
+  };
+})();
+
 const D=window.DASHBOARD_DATA;
 const FEATURES=D.F, PHASES=D.P, KEYS=D.K, DBS=D.C, NF=FEATURES.length;
 const SHORT={"HR Download (automated user upload)":"HR Download","SCORM Uploader (SCO12)":"SCORM","LinkedContent / Linked Tests":"Linked Tests","Self-registration link on login page":"Self-registration","CK Nursing (subscription / Skills link)":"CK Nursing","Multi-database (Org Picker)":"Multi-database"};
 const sh=f=>SHORT[f]||f;
 const S={reg:'All',ct:'All',ph:'All',mode:'any',sel:new Set(),q:''};
-const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const n=x=>x.toLocaleString();
+const money=v=>v>=1e6?'$'+(v/1e6).toFixed(1)+'M':v>=1e3?'$'+Math.round(v/1e3)+'K':'$'+n(v);
+const sum=(a,f)=>a.reduce((s,c)=>s+(c[f]||0),0);
 DBS.forEach(c=>c.k=c.needs.reduce((a,b)=>a+b,0));
 function rows(){return DBS.filter(c=>(S.reg==='All'||c.country===S.reg)&&(S.ct==='All'||c.ct===S.ct))}
 function matches(c){const s=[...S.sel];if(!s.length)return false;return S.mode==='any'?s.some(i=>c.needs[i]):s.every(i=>c.needs[i])}
@@ -287,10 +358,9 @@ function heads(r){
   const one=r.filter(c=>c.k>=1).length, two=r.filter(c=>c.k>=2).length;
   const cnt=[...Array(NF).keys()].map(i=>r.filter(c=>c.needs[i]).length);
   const top=cnt.indexOf(Math.max(...cnt));
-  $('heads').innerHTML=`
-   <div class="hd"><div class="v">${n(one)}</div><div class="t">databases depend on at least one of the six features CLH does not have yet.</div></div>
-   <div class="hd"><div class="v">${n(two)}</div><div class="t">databases depend on two or more of these features.</div></div>
-   <div class="hd"><div class="v sm">${esc(FEATURES[top])}</div><div class="t">Most common need: ${n(cnt[top])} databases.</div></div>`;
+  const b=r.filter(c=>c.k>=1);
+  $('heads2').innerHTML=[[money(sum(b,'value')),'contract value',money(sum(r,'value'))],[n(sum(b,'l')),'active learners',n(sum(r,'l'))],[n(sum(b,'a')),'active admins',n(sum(r,'a'))]]
+    .map(x=>`<div class="hd hd2"><div class="v">${x[0]}</div><div class="t">${x[1]} at databases blocked by at least one feature, of ${x[2]} in total.</div></div>`).join('');
 }
 function gates(r){
   const order=[...Array(NF).keys()].sort((a,b)=>r.filter(c=>c.needs[b]).length-r.filter(c=>c.needs[a]).length);
@@ -311,8 +381,8 @@ function list(r){
   $('exportBtn').disabled=!current.length;
   $('listSub').textContent=`${n(current.length)} database${current.length===1?'':'s'} need ${S.mode==='any'?'any':'all'} of: ${names.join(', ')}. Sorted by number of features needed.`;
   const LIM=500;
-  $('listWrap').innerHTML=`<div class="tbl"><table><thead><tr><th>Account</th><th>Database name</th><th>CMX ID</th><th>ECR ID</th><th>Client type</th><th>Migration status</th><th style="text-align:right">Features needed</th><th>Features</th></tr></thead><tbody>`+
-    current.slice(0,LIM).map(c=>`<tr><td>${esc(c.name)}</td><td>${esc(c.db)}</td><td>${esc(c.cmx)}</td><td>${esc(c.ecr)}</td><td>${esc(c.ct)}</td><td>${esc(c.ms)}</td><td class="n">${c.k}</td><td>${c.needs.map((x,i)=>x?`<span class="chip ${S.sel.has(i)?'on':''}">${esc(sh(FEATURES[i]))}</span>`:'').join('')}</td></tr>`).join('')+
+  $('listWrap').innerHTML=`<div class="tbl"><table><thead><tr><th>Account</th><th>Database name</th><th>CMX ID</th><th>ECR ID</th><th>Client type</th><th>Migration status</th><th style="text-align:right">Contract value</th><th style="text-align:right">Learners</th><th style="text-align:right">Admins</th><th style="text-align:right">Features needed</th><th>Features</th></tr></thead><tbody>`+
+    current.slice(0,LIM).map(c=>`<tr><td>${esc(c.name)}</td><td>${esc(c.db)}</td><td>${esc(c.cmx)}</td><td>${esc(c.ecr)}</td><td>${esc(c.ct)}</td><td>${esc(c.ms)}</td><td class="n">${c.value?money(c.value):'—'}</td><td class="n">${c.l?n(c.l):'—'}</td><td class="n">${c.a?n(c.a):'—'}</td><td class="n">${c.k}</td><td>${c.needs.map((x,i)=>x?`<span class="chip ${S.sel.has(i)?'on':''}">${esc(sh(FEATURES[i]))}</span>`:'').join('')}</td></tr>`).join('')+
     `</tbody></table><div class="more">${current.length>LIM?`Showing first ${LIM} of ${n(current.length)}. Export CSV includes all.`:'Export CSV includes these rows plus contract value, learners and admins.'}</div></div>`;
 }
 function exportCsv(list,tag){list=list||current;tag=tag||[...S.sel].map(i=>KEYS[i]).join('_');
@@ -336,12 +406,19 @@ function execSummary(){
   const opAny=op>=0?cnt[op]:0, opOnly=op>=0?g.filter(c=>c.needs[op]&&c.k===1).length:0, nonOp=op>=0?g.filter(c=>!c.needs[op]).length:g.length;
   const exOp=op>=0?g.filter(c=>c.needs.some((x,j)=>x&&j!==op)).length:g.length;
   const ready=(c,o)=>c.needs.every((x,j)=>!x||o.has(j));
+  // Build dependencies: a feature can only be delivered together with the features it depends on.
+  const DEP={orgpicker:['hr']};
+  const bundle=i=>[i,...(DEP[KEYS[i]]||[]).map(k=>KEYS.indexOf(k)).filter(j=>j>=0)];
   const open=new Set(),seq=[];
-  for(let s=0;s<NF;s++){let b=-1,bv=-1;for(let i=0;i<NF;i++){if(open.has(i))continue;const o=new Set([...open,i]);const v=g.filter(c=>ready(c,o)).length;if(v>bv){bv=v;b=i}}open.add(b);seq.push({i:b,u:bv})}
+  while(open.size<NF){let best=null,bv=-1;for(let i=0;i<NF;i++){if(open.has(i))continue;const add=bundle(i).filter(j=>!open.has(j));const o=new Set([...open,...add]);const v=g.filter(c=>ready(c,o)).length;if(v>bv||(v===bv&&best&&add.length<best.length)){bv=v;best=add}}best.forEach(j=>open.add(j));seq.push({is:best,i:best[0],u:bv})}
+  const stepLabel=s=>s.is.map(j=>esc(FEATURES[j])).join(' + ');
+  const stepShort=s=>s.is.map(j=>esc(sh(FEATURES[j]))).join(' + ');
+  const lAll=sum(all,'l'), lB=sum(g,'l'), vRec=all.filter(c=>c.value>0).length;
+  $('exWhy').innerHTML=`<b>Why it matters:</b> databases blocked by at least one missing feature hold <b>${money(sum(g,'value'))}</b> of recorded contract value and <b>${n(lB)}</b> active learners (${Math.round(lB/(lAll||1)*100)}% of all learners in scope). Contract value is recorded for only ${n(vRec)} of ${n(all.length)} databases, so the full figure is higher.`;
   $('exLead').innerHTML=`
     <li><b>${n(g.length)}</b> databases depend on at least one of the six features CLH does not have yet.</li>
     <li><b>${n(two)}</b> databases depend on two or more of these features.</li>
-    <li>Most common need: <b>${esc(FEATURES[top])}</b> (${n(cnt[top])} databases).</li>`;
+    <li>${KEYS[top]==='orgpicker'?`Most common need: <b>${esc(FEATURES[top])}</b> will require SSO and automated user management (dependent on an HR data download). The current SSO available on CLH requires manual user management. Needed by ${n(cnt[top])} databases.`:`Most common need: <b>${esc(FEATURES[top])}</b>, needed by ${n(cnt[top])} databases.`}</li>`;
   // ---- At a glance: cumulative build-up ----
   const G=g.length||1;
   const steps=seq.map((s,k)=>({...s,add:s.u-(k?seq[k-1].u:0)}));
@@ -352,70 +429,85 @@ function execSummary(){
     [n(two),'blocked by two or more'],
     [n(none),'not blocked by any of the six (needs review)'],
   ].map(x=>`<div><div class="v">${x[0]}</div><div class="l">${x[1]}</div></div>`).join('');
-  const row=(lab,add,u,k,prev)=>`<div class="st">${k}</div><div class="fl">${lab}</div><div class="ad">${add}</div>
-    <div class="bar"><i class="pv" style="width:${prev/G*100}%"></i><i class="nw" style="width:${(u-prev)/G*100}%"></i></div>
-    <div class="tot"><b>${n(u)}</b><span>${Math.round(u/G*100)}%</span></div><div class="bl">${n(g.length-u)}</div>`;
-  $('agCum').innerHTML=`<div class="hd" style="text-align:center">Build<br>step</div><div class="hd">Feature added<br>at this step</div><div class="hd" style="text-align:right">Newly able<br>to migrate</div><div class="hd">Progress toward all ${n(g.length)} blocked databases<br><span class="hk"><i style="background:#B8AC9A"></i>earlier steps <i style="background:var(--o)"></i>this step</span></div><div class="hd" style="text-align:right">Total able to migrate<br>(running total)</div><div class="hd" style="text-align:right">Still<br>blocked</div>`+
+  const rv=all.filter(c=>!c.k), cols=[['Still to migrate',all],['Blocked by at least one feature',g],['Blocked by two or more',g.filter(c=>c.k>=2)],['Not blocked by the six (needs review)',rv]];
+  $('agT').innerHTML=`<table class="tt"><thead><tr><th></th>${cols.map(c=>`<th>${c[0]}</th>`).join('')}</tr></thead><tbody>
+    <tr><td>Databases</td>${cols.map(c=>`<td>${n(c[1].length)}</td>`).join('')}</tr>
+    <tr><td>Contract value <span class="cov">(recorded for ${n(all.filter(c=>c.value>0).length)} of ${n(all.length)})</span></td>${cols.map(c=>`<td>${money(sum(c[1],'value'))}</td>`).join('')}</tr>
+    <tr><td>Active learners</td>${cols.map(c=>`<td>${n(sum(c[1],'l'))}</td>`).join('')}</tr>
+    <tr><td>Active admins</td>${cols.map(c=>`<td>${n(sum(c[1],'a'))}</td>`).join('')}</tr></tbody></table>`;
+  const intl=c=>c.country&&c.country!=='USA'&&c.country!=='Unspecified', cpx=c=>['Complex SSO','Complex Connect SSO','Simple Connect SSO','Connect SSO'].includes(c.sso);
+  const rvA=rv.filter(c=>intl(c)||cpx(c)), rvRest=rv.filter(c=>!(intl(c)||cpx(c))), rvS=rvRest.filter(c=>c.skills||c.sso==='Simple SSO');
+  var rvExt=rvA.length;
+  $('agR').innerHTML=`<b>About the ${n(rv.length)} that need review:</b> ${n(rvA.length)} rely on international support or complex/Connect SSO, which are not among the six features. ${n(rvS.length)} need only Mosby Skills (already in CLH) or Simple SSO and may be ready to migrate. ${n(rvRest.length-rvS.length)} have incomplete records.`;
+  const row=(lab,add,u,k,prev)=>`<tr${k==='0'?' class="z"':''}><td class="c">${k}</td><td>${lab}</td><td class="r ad">${add}</td>
+    <td><div class="bar"><i class="pv" style="width:${prev/G*100}%"></i><i class="nw" style="width:${(u-prev)/G*100}%"></i></div></td>
+    <td class="r"><b>${n(u)}</b></td><td class="r pc">${Math.round(u/G*100)}%</td><td class="r">${n(g.length-u)}</td></tr>`;
+  $('agCum').innerHTML=`<table class="cumt"><colgroup><col style="width:56px"><col><col style="width:96px"><col style="width:32%"><col style="width:96px"><col style="width:84px"><col style="width:84px"></colgroup>
+    <thead><tr><th class="c">Build<br>step</th><th>Built at<br>this step</th><th class="r">Newly able<br>to migrate</th>
+      <th>Progress toward all ${n(g.length)}<br><span class="hk"><i style="background:#B8AC9A"></i>earlier steps<i style="background:var(--o)"></i>this step</span></th>
+      <th class="r">Total able<br>to migrate</th><th class="r">Share of<br>blocked</th><th class="r">Still<br>blocked</th></tr></thead><tbody>`+
     row('Today (nothing built)','—',0,'0',0)+
-    steps.map((s,k)=>row(`<b>${esc(FEATURES[s.i])}</b>`,`+${n(s.add)}`,s.u,String(k+1),k?steps[k-1].u:0)).join('')+
-    `<div class="ft">Reading a row: the feature in that row is built on top of every feature above it. "Newly able to migrate" is what that feature adds; "Total able to migrate" is the running total; "Still blocked" is what remains.</div>`;
+    steps.map((s,k)=>row(`<b>${stepLabel(s)}</b>${s.is.length>1?'<div class="dep">Built together: Org Picker depends on SSO and automated user management (HR data download).</div>':''}`,`+${n(s.add)}`,s.u,String(k+1),k?steps[k-1].u:0)).join('')+
+    `</tbody></table><div class="ft">Reading a row: the feature in that row is built on top of every feature above it. "Newly able to migrate" is what that feature adds; "Total able to migrate" is the running total; "Still blocked" is what remains.</div>`;
   const s1=steps[0];
-  $('exSo').innerHTML=`<b>What this means:</b> no single feature clears the backlog. Building ${esc(sh(FEATURES[s1.i]))} first lets ${n(s1.u)} databases (${Math.round(s1.u/G*100)}%) move. ${half>=0?`Half can move after ${half+1} features, `:''}${ninety>=0?`90% after ${ninety+1}, `:''}and all ${n(g.length)} only when all ${NF} are built.`;
+  $('exSo').innerHTML=`<b>What this means:</b> no single feature clears the backlog. Building ${stepShort(s1)} first lets ${n(s1.u)} databases (${Math.round(s1.u/G*100)}%) move. ${half>=0?`Half can move after ${half+1} build step${half?'s':''}, `:''}${ninety>=0?`90% after ${ninety+1}, `:''}and all ${n(g.length)} only when all ${NF} features are built.`;
   const biggest=Math.max(...cnt), bi=cnt.indexOf(biggest);
   const opG={};if(op>=0)g.forEach(c=>{if(c.needs[op]&&c.ecr)opG[c.ecr]=(opG[c.ecr]||0)+1});
   const opTop=Object.entries(opG).sort((a,b)=>b[1]-a[1])[0];
   const opAcct=opTop?(g.find(c=>c.ecr===opTop[0])||{}).name:'';
   $('exOQ').innerHTML=`
-    <li><b>Define "customer".</b> Until agreed, we report databases only (see section 9, "Why we count databases, not customers").</li>
-    <li><b>Is the database list a workable size?</b> Lists for a single feature range from ${n(Math.min(...cnt))} to ${n(biggest)} databases.</li>`;
-  $('exSrc').textContent=D.source||'Client Directory.xlsx';$('exGen').textContent=D.generated||'';
+    <li><b>Confirm the build order.</b> Multi-database (Org Picker) depends on SSO with automated user management (HR data download), so the first build step must deliver both. Together they release ${n(steps[0].u)} databases (${Math.round(steps[0].u/G*100)}%).</li>
+    <li><b>Decide whether international and complex SSO are in scope.</b> ${n(rvExt)} of the ${n(none)} databases not blocked by the six features rely on one of them, so they are not ready to migrate.</li>
+    <li><b>Define "customer".</b> Until agreed, we report databases only (see section 8, "Why we count databases, not customers").</li>`;
+  $('exSrc').textContent=(D.source||'Client Directory.xlsx').replace(/-[0-9a-f]{6,}(?=\.xlsx$)/i,'').replace(/\.xlsx$/i,'');$('exGen').textContent=D.generated||'';
   
 }
 
 
 /* ---------- ALL DATABASES SORTED BY FEATURES NEEDED (grouped by ECR ID) ---------- */
-const A={sort:'k',dir:-1,hide:true,q:'',k:null,group:true,col:new Set()};
+const A={sort:(KEYS.indexOf('orgpicker')>=0?'f'+KEYS.indexOf('orgpicker'):'k'),dir:-1,hide:true,q:'',k:null,group:true,exp:new Set()};
 let allList=[];
 function all(r){
   const order=[...Array(NF).keys()].sort((a,b)=>r.filter(c=>c.needs[b]).length-r.filter(c=>c.needs[a]).length);
   const base=r.filter(c=>!A.hide||c.k>0);
   const by=[...Array(NF+1).keys()].reverse().map(k=>({k,v:base.filter(c=>c.k===k).length})).filter(x=>x.v>0);
-  $('dist').innerHTML=`<button data-k="" class="${A.k===null?'on':''}"><b>${n(base.length)}</b>all</button>`+by.map(x=>`<button data-k="${x.k}" class="${A.k===x.k?'on':''}"><b>${n(x.v)}</b>need ${x.k} feature${x.k===1?'':'s'}</button>`).join('');
+  $('dist').innerHTML=`<button data-k="" class="${A.k===null?'on':''}">All databases <b>${n(base.length)}</b></button>`+by.map(x=>`<button data-k="${x.k}" class="${A.k===x.k?'on':''}">Need ${x.k} feature${x.k===1?'':'s'} <b>${n(x.v)}</b></button>`).join('');
   document.querySelectorAll('#dist button').forEach(b=>b.onclick=()=>{A.k=b.dataset.k===''?null:+b.dataset.k;all(rows())});
   const q=A.q.trim().toLowerCase();
   const key=A.sort;
-  const dbv=c=>key==='k'?c.k:key==='name'?c.name.toLowerCase():key==='cmx'?c.cmx:key==='ecr'?c.ecr:c.needs[+key.slice(1)];
+  const dbv=c=>key==='value'||key==='l'||key==='a'?c[key]:key==='k'?c.k:key==='name'?c.name.toLowerCase():key==='cmx'?c.cmx:key==='ecr'?c.ecr:c.needs[+key.slice(1)];
   const cmp=(x,y)=>(x<y?-1:x>y?1:0)*A.dir;
   const dbSort=(a,b)=>cmp(dbv(a),dbv(b))||b.k-a.k||a.name.localeCompare(b.name)||a.cmx.localeCompare(b.cmx);
   const list=base.filter(c=>A.k===null||c.k===A.k).filter(c=>!q||(c.name+' '+c.db+' '+c.cmx+' '+c.ecr).toLowerCase().includes(q));
   // build groups by ECR ID (blank ECR = its own group)
   const gm=new Map();
-  list.forEach(c=>{const g=c.ecr||('—'+c.cmx);if(!gm.has(g))gm.set(g,{ecr:c.ecr,dbs:[]});gm.get(g).dbs.push(c)});
+  const isVisn=c=>/\bVISN\b/i.test(c.name);
+  list.forEach(c=>{const g=isVisn(c)?'VISN':(c.ecr||('—'+c.cmx));if(!gm.has(g))gm.set(g,{key:g,ecr:c.ecr,visn:g==='VISN',dbs:[]});gm.get(g).dbs.push(c)});
   const groups=[...gm.values()].map(g=>{g.dbs.sort(dbSort);g.needs=[...Array(NF).keys()].map(i=>g.dbs.filter(c=>c.needs[i]).length);
-    g.k=g.needs.filter(x=>x>0).length;g.name=g.dbs[0].name;g.multi=g.dbs.length>1;return g});
-  const gv=g=>key==='k'?g.k:key==='name'?g.name.toLowerCase():key==='cmx'?g.dbs[0].cmx:key==='ecr'?g.ecr:g.needs[+key.slice(1)];
+    g.k=g.needs.filter(x=>x>0).length;g.name=g.visn?'VISN (VA networks)':g.dbs[0].name;g.ecrs=[...new Set(g.dbs.map(c=>c.ecr).filter(Boolean))];g.multi=g.dbs.length>1;return g});
+  const gv=g=>key==='value'||key==='l'||key==='a'?sum(g.dbs,key):key==='k'?g.k:key==='name'?g.name.toLowerCase():key==='cmx'?g.dbs[0].cmx:key==='ecr'?g.ecr:g.needs[+key.slice(1)];
   if(A.group) groups.sort((a,b)=>cmp(gv(a),gv(b))||b.k-a.k||b.dbs.length-a.dbs.length||a.name.localeCompare(b.name));
   allList=A.group?groups.flatMap(g=>g.dbs):[...list].sort(dbSort);
   const multiG=groups.filter(g=>g.multi), multiDb=multiG.reduce((s,g)=>s+g.dbs.length,0);
-  $('allSub').textContent=`${n(allList.length)} database${allList.length===1?'':'s'}, most features needed first.`+(A.group?` Accounts with several databases are grouped (${n(multiG.length)} accounts, ${n(multiDb)} databases); click an account row to expand or collapse.`:'')+' Click a column header to re-sort.';
+  $('allSub').textContent=`${n(allList.length)} database${allList.length===1?'':'s'}, sorted by ${key==='k'?'features needed':key==='name'?'account':key==='cmx'?'database':key==='ecr'?'ECR ID':key==='value'?'contract value':key==='l'?'learners':key==='a'?'admins':esc(sh(FEATURES[+key.slice(1)]))+(A.group?' count':'')}${A.dir<0?' (highest first)':' (A to Z)'}.`+(A.group?` Accounts with several databases are grouped (${n(multiG.length)} groups, ${n(multiDb)} databases), and all VISN (VA network) databases form one group whatever their ECR ID; click a group row to see its databases.`:'')+' Click a column header to re-sort.';
   const th=(k,l,cls='')=>`<th class="sortable ${cls} ${A.sort===k?'on':''}" data-s="${k}">${l}${A.sort===k?(A.dir<0?' ▼':' ▲'):''}</th>`;
-  const dbRow=(c,child)=>`<tr class="${child?'child':''}"><td>${child?'<span class="ind">└</span>':''}${esc(c.name)}</td><td>${esc(c.db)}</td><td>${esc(c.cmx)}</td><td>${esc(c.ecr)}</td><td>${esc(c.ct)}</td><td class="fc"><b>${c.k}</b></td>${order.map(i=>`<td class="fc">${c.needs[i]?'<span class="dot" title="Needed"></span>':'<span class="dot na"></span>'}</td>`).join('')}</tr>`;
-  const grpRow=g=>{const open=!A.col.has(g.ecr);return `<tr class="grp" data-g="${esc(g.ecr)}"><td colspan="2"><span class="car">${open?'▾':'▸'}</span><b>${esc(g.name)}</b></td><td><b>${n(g.dbs.length)} databases</b></td><td><b>${esc(g.ecr)}</b></td><td></td><td class="fc" title="Different features needed across these databases"><b>${g.k}</b></td>${order.map(i=>`<td class="fc">${g.needs[i]?`<span class="gn">${g.needs[i]}</span>`:'<span class="dot na"></span>'}</td>`).join('')}</tr>`};
+  const dbRow=(c,child)=>`<tr class="${child?'child':''}"><td>${child?'<span class="ind">└</span>':''}${esc(c.name)}</td><td>${esc(c.db)}</td><td>${esc(c.cmx)}</td><td>${esc(c.ecr)}</td><td>${esc(c.ct)}</td><td class="n">${c.value?money(c.value):'—'}</td><td class="n">${c.l?n(c.l):'—'}</td><td class="n">${c.a?n(c.a):'—'}</td><td class="fc"><b>${c.k}</b></td>${order.map(i=>`<td class="fc">${c.needs[i]?'<span class="dot" title="Needed"></span>':'<span class="dot na"></span>'}</td>`).join('')}</tr>`;
+  const grpRow=g=>{const open=A.exp.has(g.key);return `<tr class="grp" data-g="${esc(g.key)}"><td colspan="2"><span class="car">${open?'▾':'▸'}</span><b>${esc(g.name)}</b></td><td><b>${n(g.dbs.length)} databases</b></td><td><b>${g.ecrs.length>1?n(g.ecrs.length)+' ECR IDs':esc(g.ecr)}</b></td><td></td><td class="n"><b>${sum(g.dbs,'value')?money(sum(g.dbs,'value')):'—'}</b></td><td class="n"><b>${n(sum(g.dbs,'l'))}</b></td><td class="n"><b>${n(sum(g.dbs,'a'))}</b></td><td class="fc" title="Different features needed across these databases"><b>${g.k}</b></td>${order.map(i=>`<td class="fc">${g.needs[i]?`<span class="gn">${g.needs[i]}</span>`:'<span class="dot na"></span>'}</td>`).join('')}</tr>`};
   const LIM=500;let out=[],cnt=0;
-  if(A.group){for(const g of groups){if(cnt>=LIM)break;
-      if(g.multi){out.push(grpRow(g));if(!A.col.has(g.ecr))g.dbs.forEach(c=>out.push(dbRow(c,true)));}else out.push(dbRow(g.dbs[0],false));
+  if(A.group){for(const g of groups){if(out.length>=LIM)break;
+      if(g.multi){out.push(grpRow(g));if(A.exp.has(g.key))g.dbs.forEach(c=>out.push(dbRow(c,true)));}else out.push(dbRow(g.dbs[0],false));
       cnt+=g.dbs.length;}}
   else{allList.slice(0,LIM).forEach(c=>out.push(dbRow(c,false)));cnt=Math.min(LIM,allList.length)}
-  $('allWrap').innerHTML=`<div class="tbl"><table><thead><tr>${th('name','Account')}<th>Database name</th>${th('cmx','Databases')}${th('ecr','ECR ID')}<th>Client type</th>${th('k','Features needed','fc')}${order.map(i=>th('f'+i,esc(sh(FEATURES[i])),'fc')).join('')}</tr></thead><tbody>`+out.join('')+
+  $('allWrap').innerHTML=`<div class="tbl"><table><thead><tr>${th('name','Account')}<th>Database name</th>${th('cmx','Databases')}${th('ecr','ECR ID')}<th>Client type</th>${th('value','Contract value','r')}${th('l','Learners','r')}${th('a','Admins','r')}${th('k','Features needed','fc')}${order.map(i=>th('f'+i,esc(sh(FEATURES[i])),'fc')).join('')}</tr></thead><tbody>`+out.join('')+
     `</tbody></table><div class="more">${allList.length>cnt?`Showing first ${n(cnt)} of ${n(allList.length)} databases. Export CSV includes all.`:`${n(allList.length)} databases.`}${A.group?' Account rows show how many of that account’s databases need each feature.':''}</div></div>`;
   document.querySelectorAll('#allWrap th.sortable').forEach(h=>h.onclick=()=>{const s=h.dataset.s;if(A.sort===s)A.dir*=-1;else{A.sort=s;A.dir=(s==='name'||s==='cmx'||s==='ecr')?1:-1}all(rows())});
-  document.querySelectorAll('#allWrap tr.grp').forEach(tr=>tr.onclick=()=>{const g=tr.dataset.g;A.col.has(g)?A.col.delete(g):A.col.add(g);all(rows())});
+  document.querySelectorAll('#allWrap tr.grp').forEach(tr=>tr.onclick=()=>{const g=tr.dataset.g;A.exp.has(g)?A.exp.delete(g):A.exp.add(g);all(rows())});
 }
 
 function render(){const r=rows();heads(r);gates(r);list(r);all(r)}
 function fillSel(id,key,field){const vals=['All',...[...new Set(DBS.map(c=>c[field]))].sort()];
   $(id).innerHTML=vals.map(v=>`<option>${esc(v)}</option>`).join('');$(id).onchange=e=>{S[key]=e.target.value;render()}}
-fillSel('regSel','reg','country');fillSel('ctSel','ct','ct');
+
 document.querySelectorAll('#modeSeg button').forEach(b=>b.onclick=()=>{S.mode=b.dataset.m;document.querySelectorAll('#modeSeg button').forEach(x=>x.classList.toggle('on',x===b));render()});
 $('clearBtn').onclick=()=>{S.sel.clear();render()};
 $('q').oninput=e=>{S.q=e.target.value;list(rows())};
@@ -424,9 +516,6 @@ $('exportAllBtn').onclick=()=>exportCsv(allList,'by_features_needed');
 $('groupEcr').onchange=e=>{A.group=e.target.checked;all(rows())};
 $('hideNone').onchange=e=>{A.hide=e.target.checked;all(rows())};
 $('q2').oninput=e=>{A.q=e.target.value;all(rows())};
-const EX=D.excl||{};const set=(id,v)=>$(id).textContent=(v??0).toLocaleString();
-$('fSrc').textContent=D.source||'Client Directory.xlsx';set('fRows',D.rows);$('fGen').textContent=D.generated||'';set('fN',DBS.length);
-set('fC',EX['Complete']);set('fNN',EX['Net New']);set('fT',EX['TTP Cutover']);set('fCX',EX['Canceled']);set('fCT',EX['Client type']);set('fXF',EX['Excel filter']);set('fNoCmx',EX['No CMX ID']);
 execSummary();
 render();
 </script>
