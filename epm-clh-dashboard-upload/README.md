@@ -18,7 +18,19 @@ All files sit in one folder so they can be uploaded to GitHub in a single step.
 | `.nojekyll` | Tells GitHub Pages to serve files as-is |
 | `robots.txt` | Asks search engines not to index the site |
 | `.gitignore` | Keeps workbooks and temporary files out of the repository |
+| `pages-workflow-for-flat-folder.yml` | Optional. Only if Pages is set to "GitHub Actions": create `.github/workflows/pages.yml` in GitHub and paste this file's contents |
 | `README.md` | This file |
+
+## What the dashboard shows
+
+1. Executive summary
+2. At a glance (with why some databases aren't blocked by functionality)
+3. Build simulator
+4. Features needed
+5. Databases by selected feature (CSV export)
+6. Databases sorted by features needed (grouped by account; CSV export)
+7. How we counted (with glossary)
+8. Why we count databases, not customers
 
 ## Upload to GitHub
 
