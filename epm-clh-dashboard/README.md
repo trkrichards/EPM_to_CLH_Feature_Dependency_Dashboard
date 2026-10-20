@@ -34,6 +34,7 @@ requirements.txt               Python dependency for the build script
 .github/workflows/pages.yml    Publishes the site to GitHub Pages on push to main
 .nojekyll                      Tells GitHub Pages to serve files as-is
 robots.txt                     Asks search engines not to index the site
+standalone/                    Single-file copy of the dashboard (data, fonts and icon built in) for emailing or opening offline
 ```
 
 ## Hosting on GitHub Pages

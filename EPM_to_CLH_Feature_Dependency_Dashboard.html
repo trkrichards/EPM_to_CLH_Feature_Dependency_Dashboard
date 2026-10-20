@@ -458,7 +458,6 @@ function execSummary(){
   const opAcct=opTop?(g.find(c=>c.ecr===opTop[0])||{}).name:'';
   $('exOQ').innerHTML=`
     <li><b>Confirm the build order.</b> Multi-database (Org Picker) depends on SSO with automated user management (HR data download), so the first build step must deliver both. Together they release ${n(steps[0].u)} databases (${Math.round(steps[0].u/G*100)}%).</li>
-    <li><b>Decide whether international and complex SSO are in scope.</b> ${n(rvExt)} of the ${n(none)} databases not blocked by the six features rely on one of them, so they are not ready to migrate.</li>
     <li><b>Define "customer".</b> Until agreed, we report databases only (see section 8, "Why we count databases, not customers").</li>`;
   $('exSrc').textContent=(D.source||'Client Directory.xlsx').replace(/-[0-9a-f]{6,}(?=\.xlsx$)/i,'').replace(/\.xlsx$/i,'');$('exGen').textContent=D.generated||'';
   
