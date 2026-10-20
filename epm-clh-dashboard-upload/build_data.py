@@ -66,7 +66,7 @@ def clean_id(v):
 # Gates: key, label, target phase, test(row, col)
 GATES = [
     ("orgpicker", "Multi-database (Org Picker)", "Not phased", lambda r, c: yes(r[c["orgpicker"]])),
-    ("hr", "HR Download (automated user upload)", "Phase 4", lambda r, c: yes(r[c["hr"]])),
+    ("hr", "HR Download (automated user management)", "Phase 4", lambda r, c: yes(r[c["hr"]])),
     ("selfreg", "Self-registration link on login page", "Not phased", lambda r, c: yes(r[c["selfreg"]])),
     ("scorm", "SCORM Uploader (SCO12)", "Phase 5", lambda r, c: yes(r[c["scorm"]])),
     ("linked", "LinkedContent / Linked Tests", "Phase 5",

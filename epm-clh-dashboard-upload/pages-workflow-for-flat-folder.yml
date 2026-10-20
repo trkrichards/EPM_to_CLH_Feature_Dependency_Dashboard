@@ -1,0 +1,39 @@
+# OPTIONAL. Only needed if Settings > Pages > Source is set to "GitHub Actions".
+# In GitHub choose Add file > Create new file, name it exactly:
+#   .github/workflows/pages.yml
+# and paste this content. It publishes the files in the repository root.
+name: Deploy dashboard to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assemble site
+        run: |
+          mkdir _site
+          cp index.html dashboard-data.js favicon.svg *.woff2 robots.txt .nojekyll _site/
+          cp EPM_to_CLH_Feature_Dependency_Dashboard.html _site/ || true
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
