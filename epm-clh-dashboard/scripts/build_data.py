@@ -38,10 +38,10 @@ HEADERS = {
 }
 
 # Scope: databases still to migrate.
-# If the main tab has Excel filters set, those filters define the base scope
-# (e.g. Phase excludes Cancel/Remove; Migration Status excludes Complete, Net New,
-# TTP Cutover and NA). Otherwise the EXCLUDE_PHASE / EXCLUDE_STATUS lists below apply.
-# Fallback rules mirror the Excel filters used previously on the main tab.
+# If the main tab has Excel filters set, those filters define the base scope.
+# Otherwise these fallback rules apply; they mirror the filters used previously
+# (Phase excludes Cancel/Remove and other non-migration phases; Migration Status
+# excludes Complete, NA, Net New, TTP Cutover and Handoff to AM).
 EXCLUDE_PHASE = {"Cancel/Remove", "Cancelled", "Internal", "NA", "Data Moved to CLH", "DirectCourse"}
 EXCLUDE_STATUS = {"Complete", "NA", "Net New", "TTP Cutover", "Handoff to AM"}
 REPORTED_STATUS = ["Complete", "Net New", "TTP Cutover"]
@@ -146,7 +146,7 @@ def main():
     if len(sys.argv) != 2:
         sys.exit(__doc__)
     rows, c = read_rows(sys.argv[1])
-    ex = {s: sum(1 for r in rows if r[c["status"]] == s) for s in REPORTED_STATUS}
+    ex = {s: sum(1 for r in rows if str(r[c["status"]] or "").strip() == s) for s in REPORTED_STATUS}
 
     flt = read_autofilter(sys.argv[1], SHEET)
     if flt:
