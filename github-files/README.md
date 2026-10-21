@@ -1,6 +1,6 @@
 # EPM to CLH: features needed by database
 
-`index.html` is the complete dashboard in one file. The data, fonts and icon are built in, so it works on GitHub Pages and also opens by double-clicking it on your computer.
+`index.html` is the complete dashboard in one file. Section 9 gives reference totals for Connect and DirectCourse databases, which are not included in the main counts. The data, fonts and icon are built in, so it works on GitHub Pages and also opens by double-clicking it on your computer.
 
 ## Files (in copy-and-paste order)
 

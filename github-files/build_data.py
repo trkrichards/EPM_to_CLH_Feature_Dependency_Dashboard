@@ -16,6 +16,7 @@ import json
 import re
 import sys
 import zipfile
+from collections import Counter
 from pathlib import Path
 
 import openpyxl
@@ -35,6 +36,7 @@ HEADERS = {
     "orgpicker": "Multi-database (Org Picker)",
     "linked_tests": "Linked Tests", "linkedcontent": "LinkedContent (Tests)",
     "selfreg": "Self-Registration Link on Login Page",
+    "selfenroll": "Self-Enroll: eLearning/Skills Turned On",
     "ck_sub": "CK Nursing Subscription", "ck_link": "CK Nursing Link on Skills Instance",
     "change_type": "Change Type",
     "sso": "SSO Eligibility", "skills": "Functionality: Mosby Skills",
@@ -50,6 +52,7 @@ EXCLUDE_STATUS = {"Complete", "NA", "Net New", "TTP Cutover", "Handoff to AM"}
 REPORTED_STATUS = ["Complete", "Net New", "TTP Cutover"]
 EXCLUDE_CLIENT_TYPE = {"Workforce Development", "Internal MCS Site",
                        "Connect Partner", "EPM Connect", "LMS Connect", "Clinical Skills Connect"}
+CONNECT_TYPES = {"Connect Partner", "EPM Connect", "LMS Connect", "Clinical Skills Connect"}
 ID_PLACEHOLDERS = {"", "NULL", "N/A", "NA", "NONE", "-", "NEW CUSTOMER", "TTP CUT OVER", "TTP ONLY"}
 
 
@@ -70,7 +73,8 @@ def clean_id(v):
 GATES = [
     ("orgpicker", "Multi-database (Org Picker)", "Not phased", lambda r, c: yes(r[c["orgpicker"]])),
     ("hr", "HR Download (automated user management)", "Phase 4", lambda r, c: yes(r[c["hr"]])),
-    ("selfreg", "Self-registration link on login page", "Not phased", lambda r, c: yes(r[c["selfreg"]])),
+    ("selfreg", "Self-registration / self-enrollment", "Not phased",
+     lambda r, c: yes(r[c["selfreg"]]) or yes(r[c["selfenroll"]])),
     ("scorm", "SCORM Uploader (SCO12)", "Phase 5", lambda r, c: yes(r[c["scorm"]])),
     ("linked", "LinkedContent / Linked Tests", "Phase 5",
      lambda r, c: yes(r[c["linkedcontent"]]) or yes(r[c["linked_tests"]])),
@@ -168,6 +172,7 @@ def main():
 
     ex["Canceled"] = sum(1 for r in scope if canceled(r))
     scope = [r for r in scope if not canceled(r)]
+    connect_rows = [r for r in scope if (r[c["client_type"]] or "").strip() in CONNECT_TYPES]
     ex["Client type"] = sum(1 for r in scope if (r[c["client_type"]] or "").strip() in EXCLUDE_CLIENT_TYPE)
     scope = [r for r in scope if (r[c["client_type"]] or "").strip() not in EXCLUDE_CLIENT_TYPE]
     ex["No CMX ID"] = sum(1 for r in scope if not clean_id(r[c["cmx"]]))
@@ -199,9 +204,37 @@ def main():
             "skills": 1 if yes(r[c["skills"]]) else 0,
         })
     ex["Duplicate CMX ID"] = dup
+
+    def summarize(rs):
+        """Reference totals for databases outside the dashboard scope (one per CMX ID)."""
+        out, seen = [], set()
+        for r in rs:
+            k = clean_id(r[c["cmx"]])
+            if not k or k in seen:
+                continue
+            seen.add(k)
+            out.append(r)
+        nd = [[1 if g[3](r, c) else 0 for g in GATES] for r in out]
+        return {
+            "n": len(out),
+            "value": round(sum(num(r[c["value"]]) for r in out)),
+            "value_recorded": sum(1 for r in out if num(r[c["value"]]) > 0),
+            "l": sum(num(r[c["learners"]]) for r in out),
+            "a": sum(num(r[c["admins"]]) for r in out),
+            "blocked": sum(1 for x in nd if any(x)),
+            "needs": [sum(x[i] for x in nd) for i in range(len(GATES))],
+            "status": dict(Counter(str(r[c["status"]] or "(blank)").strip() for r in out).most_common()),
+            "ct": dict(Counter(str(r[c["client_type"]] or "Unspecified").strip() for r in out).most_common()),
+        }
+
+    outside = {
+        "connect": summarize(connect_rows),
+        "directcourse": summarize([r for r in rows if str(r[c["phase"]] or "").strip() == "DirectCourse" and r[c["account"]]]),
+    }
+
     data = {
         "F": [g[1] for g in GATES], "P": [g[2] for g in GATES], "K": [g[0] for g in GATES],
-        "C": dbs, "rows": len(rows), "excl": ex, "filter": bool(flt),
+        "C": dbs, "rows": len(rows), "excl": ex, "filter": bool(flt), "outside": outside,
         "source": Path(sys.argv[1]).name,
         "generated": datetime.date.today().strftime("%B %d, %Y").replace(" 0", " "),
     }
